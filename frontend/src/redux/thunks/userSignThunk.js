@@ -98,3 +98,30 @@ export const deleteAddressThunk = createAsyncThunk('fetch/deleteAddress', async(
         return rejectWithValue(error)
     }
 })
+export const orderThunk = createAsyncThunk('fetch/makeorder', async({products, totalAmount, address}, {rejectWithValue})=>{
+    // console.log(items)
+    const items = products.map((item, indx)=>({
+        product: item._id,
+        quantity: item.quantity,
+        price: item.amount
+    }))
+    console.log(items)
+    try{
+        const response = await fetch(`${BackendUrl}/user/order`,{
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+                token: localStorage.getItem('token')
+            },
+            body: JSON.stringify({items, totalAmount, address})
+        })
+       const result = await response.json()
+        if(response.status ==200){
+             return result
+        }else{
+            return rejectWithValue(result)
+        }
+    }catch(error){
+        return rejectWithValue(error)
+    }
+})

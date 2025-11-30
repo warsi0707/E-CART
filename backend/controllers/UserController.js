@@ -59,11 +59,12 @@ export const deleteAddress = async(req,res)=>{
 }
 export const makeOrder=async(req, res)=>{
     const {items, totalAmount, address} = req.body;
+    console.log(items, totalAmount, address)
     try{
         const newOrder = await Order.create({
             user: req.user,
             address,
-            items,
+            items: items,
             totalAmount
         })
         return res.json({

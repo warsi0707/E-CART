@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit"
-import { deleteAddressThunk, getAddressThunk, postAddressThunk, userSigninThunk, userSignUpThunk } from "../thunks/userSignThunk"
+import { deleteAddressThunk, getAddressThunk, orderThunk, postAddressThunk, userSigninThunk, userSignUpThunk } from "../thunks/userSignThunk"
 import toast from "react-hot-toast"
 import { postProductThunk } from "../thunks/sellerThunk"
 
@@ -53,7 +53,6 @@ const userSlice = createSlice({
         getCart: (state, action)=>{
             const items = JSON.parse(localStorage.getItem("carts"))
             const final = JSON.parse(localStorage.getItem('finalCart'))
-            console.log(items)
             state.carts = items
             state.finalCart = final
         },
@@ -160,6 +159,12 @@ const userSlice = createSlice({
         .addCase(postAddressThunk.fulfilled, (state ,action)=>{
             console.log(action.payload)
             state.adresses = [...state.adresses, action.payload.address]
+        })
+        .addCase(orderThunk.rejected, (action)=>{
+        })
+        .addCase(orderThunk.fulfilled, (state ,action)=>{
+            console.log(action.payload)
+            // state.adresses = [...state.adresses, action.payload.address]
         })
     }
 })

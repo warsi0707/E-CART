@@ -28,8 +28,9 @@ export default function UserAddress(){
                     <p>Add Address</p>
                 </button>
             </div>
-            <div className="w-full flex flex-col md:grid grid-cols-2 gap-2">
-                {addresses && addresses.map((item)=> (
+            <div className="w-full flex flex-col md:grid grid-cols-2 gap-2 ">
+                {addresses.length <=0 && <p className="flex justify-center items-center w-full">No address</p>}
+                {addresses.length >0 && addresses.map((item)=> (
                      <AddressCard key={item._id} item={item} handleRemoveAddress={()=> handleRemoveAddress(item._id)}/>
                 ))}
             </div>

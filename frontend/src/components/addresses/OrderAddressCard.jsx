@@ -1,13 +1,13 @@
 import { memo } from "react";
 
-function OrderAddressCard() {
+function OrderAddressCard({item,onSelect,active}) {
   return (
-    <button className=" bg-slate-200 text-black w-full  p-2 rounded-md cursor-pointer flex  flex-col items-start border-4 border-secondry ">
-      <p className="text-2xl font-semibold">Mumbai</p>
-      <p>Lorem ipsum dolor sit amet.</p>
+    <button onClick={onSelect} className={`${active._id === item._id ?"border-secondry text-black border-4 ": ""} bg-slate-200 w-full p-2 rounded-md cursor-pointer flex flex-col items-start`}>
+      <p className="text-2xl font-semibold">{item.city}</p>
+      <p>{item.locality}</p>
       <div className="flex flex-col items-start">
-        <p>400612</p>
-        <p>India</p>
+        <p>{item.pin}</p>
+        <p>{item.country}</p>
       </div>
     </button>
   );

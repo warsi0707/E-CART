@@ -34,7 +34,7 @@ export default function ProductDetail() {
     <div className="p-8 md:p-14 md:px-32 flex flex-col gap-5 min-h-screen mb-10">
       <div className="mt-8 flex flex-col justify-between">
          <div className="pb-10">
-            <BackButton/>
+            <BackButton onBack={()=> history.back()}/>
          </div>
         <div>
           <h1 className="text-xl md:text-4xl font-semibold">{product.title}</h1>

@@ -12,6 +12,7 @@ const UserAccount = lazy(()=>import("./pages/UserAccount"))
 const Signup = lazy(()=>import("./pages/Signup"))
 const Signin = lazy(()=>import("./pages/Signin"))
 const AdminDashboard = lazy(()=>import("./admin/AdminDashboard"))
+const PlacedOrder = lazy(()=>import("./pages/PlacedOrder"))
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
         <Route path="/signup" element={<Signup/>}/>
         <Route path="/signin" element={userAuth?.isAuthenticated?<Home/>:<Signin/>}/>
         <Route path="/admin-dashboard" element={<AdminDashboard/>}/>
+        <Route path="/placed-order" element={<PlacedOrder/>}/>
       </Routes>
       <Footer/>
     </BrowserRouter>
