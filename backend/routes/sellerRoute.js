@@ -1,7 +1,7 @@
 import  express from 'express'
 import { deleteProduct, editProduct, filterProduct, getProductById, getProducts, postProduct, updateStatus } from '../controllers/SellerControllers.js';
 import AuthChecker from "../middleware/AuthMiddle.js"
-import upload from '../utils/ImageUploadermulter.js';
+import upload from '../utils/ImageUploader.js';
 const sellerRouter = express.Router()
 
 
