@@ -127,8 +127,6 @@ Users can print a formatted receipt for any completed order.
 ### Homepage2
 ![alt text](frontend/public/screenshot/home2.png)
 
-### Like and dislike listing
-![alt text](frontend/public/screenshot/likeDislike.png)
 
 ### Dark pages
 ![alt text](frontend/public/screenshot/dark-home.png)
@@ -146,7 +144,7 @@ Users can print a formatted receipt for any completed order.
 
 ### Place order
 ![alt text](frontend/public/screenshot/orderpage.png)
-![alt text](frontend/public/screenshot/placedoreder.png)
+![alt text](frontend/public/screenshot/placedOreder.png)
 
 ### User account
 ![alt text](frontend/public/screenshot/user-account.png)
