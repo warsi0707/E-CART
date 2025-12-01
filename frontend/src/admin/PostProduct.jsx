@@ -2,7 +2,7 @@ import { useState } from "react";
 import ProductInput from "./ProductInput";
 import { RxCross2 } from "react-icons/rx";
 import {useDispatch}from "react-redux"
-import { uploadProductThunk } from "../redux/thunks/userSignThunk";
+import { postProductThunk } from "../redux/thunks/sellerThunk";
 
 
 export default function PostProduct({setIsPosting}){
@@ -61,7 +61,7 @@ export default function PostProduct({setIsPosting}){
         // formData.append("discount", productData.discount)
         // formData.append("stock", productData.stock)
         formData.append("photos", images)
-        dispatch(uploadProductThunk({formData}))
+        dispatch(postProductThunk({formData}))
     }
     return (
         <div onClick={()=> setIsPosting(false)} className=" w-full min-h-screen fixed top-0 left-0 bg-black/10 backdrop-blur-md flex justify-center items-center">

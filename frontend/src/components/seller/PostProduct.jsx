@@ -3,7 +3,7 @@ import ProductInput from "./ProductInput";
 import { productSchema } from "../../utils/Schema";
 import { z }from "zod"
 import { useDispatch, useSelector } from "react-redux";
-import { postProductThunk } from "../../redux/thunks/sellerThunk";
+import { postProductThunk } from "../../redux/thunks/sellerThunk.js";
 
 function PostProduct({setIsPosting}){
     const dispatch = useDispatch()
