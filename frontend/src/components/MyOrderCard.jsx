@@ -1,4 +1,5 @@
 import { memo } from "react"
+import { BackendUrl } from "../utils/Backendurl"
 
 function MyOrderCard({order, onCancel}){
     const dates =new Date(order?.createdAt)
@@ -37,7 +38,7 @@ function MyOrderCard({order, onCancel}){
             <div className="border-t border-gray-primary py-3 w-full grid sm:grid-cols-2 gap-3 ">
                 {order && order.items.map((item)=>(
                     <div key={item._id} className="flex items-center gap-5">
-                        <img src={`http://localhost:3000/${item.product.images[0]}`} className="h-20 w-20 rounded-md" alt="" />
+                        <img src={`${BackendUrl}/${item.product.images[0]}`} className="h-20 w-20 rounded-md" alt="" />
                         <div>
                             <p className="">{item.product.title}</p>
                             <p className="text-sm">Quantity: {item.quantity}</p>

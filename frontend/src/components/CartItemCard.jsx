@@ -2,6 +2,7 @@ import { memo, useState } from "react"
 import { useDispatch } from "react-redux"
 import { Link } from "react-router"
 import { decreaseQnt, increaseQnt } from "../redux/slices/userSlice"
+import { BackendUrl } from "../utils/Backendurl"
 
 function CartItemCard({item,handleRemoveItem}){
     const dispatch = useDispatch()
@@ -18,7 +19,7 @@ function CartItemCard({item,handleRemoveItem}){
     return (
         <div className="w-full flex justify-between border border-gray-400 rounded-md p-1">
             <div className="flex gap-4">
-                <img src={`http://localhost:3000/${item.images[0]}`} className="h-20 w-20 rounded-md" alt="" />
+                <img src={`${BackendUrl}/${item.images[0]}`} className="h-20 w-20 rounded-md" alt="" />
                 <div className="flex flex-col justify-between">
                     <Link to={"#"} className="= text-xs md:text-sm text-purple-primary hover:underline">{item.title}</Link>
                     <p className="text-sm">Price: {item.price}</p>

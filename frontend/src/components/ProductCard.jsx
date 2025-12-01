@@ -3,6 +3,7 @@ import { Link } from "react-router"
 import Star from "./Star";
 import {useDispatch} from "react-redux"
 import { addToCart } from "../redux/slices/userSlice";
+import { BackendUrl } from "../utils/Backendurl";
 
 function ProductCard({product}){
     const dispatch = useDispatch()
@@ -12,7 +13,7 @@ function ProductCard({product}){
     }
     return (
         <div className="h-96 w-60 flex flex-col gap-2 relative">
-            <img src={`http://localhost:3000/${product?.images[0]}`} className="h-60 rounded-md bg-gray-primary " alt="" />
+            <img src={`${BackendUrl}/${product?.images[0]}`} className="h-60 rounded-md bg-gray-primary " alt="" />
             <div className="flex flex-col gap-1">
                 <Link to={`/product/${product._id}`} className="text-xs hover:text-purple-primary text-start font-light">{product.title}</Link>
                 <p className="text-xs">{product?.category}</p>

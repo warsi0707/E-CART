@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
 import { getProductsByIdThunks } from "../redux/thunks/productsThunk";
 import { addToCart } from "../redux/slices/userSlice";
+import { BackendUrl } from "../utils/Backendurl";
 
 export default function ProductDetail() {
   const { id } = useParams();
@@ -45,7 +46,7 @@ export default function ProductDetail() {
         <div className="h-full md:h-[500px] flex flex-col w-full  md:grid grid-cols-5 gap-10 md:gap-5">
           <div className="h-full w-full col-span-4 ">
             <img
-              src={`http://localhost:3000/${activeImage}`}
+              src={`${BackendUrl}/${activeImage}`}
               className="w-full h-96 md:h-[520px] rounded-xl object-fill"
               alt=""
             />
@@ -61,7 +62,7 @@ export default function ProductDetail() {
                   } rounded-md cursor-pointer overflow-hidden`}
                 >
                   <img
-                    src={`http://localhost:3000/${img}`}
+                    src={`${BackendUrl}/${img}`}
                     className="rounded-md h-32 w-32 hover:scale-125 transition-all duration-300"
                     alt=""
                   />
