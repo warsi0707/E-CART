@@ -23,6 +23,10 @@ const orderSchema = new mongoose.Schema({
         enum: ['PENDING', 'PROCESSING', 'SHIPPED', 'DELIVERED', 'CANCELLED'],
         default: 'PENDING'
     },
+    createdAt: {
+        type: Date,
+        default: Date.now()
+    }
 })
 
 const Order = mongoose.model('Order', orderSchema)

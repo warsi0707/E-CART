@@ -1,9 +1,9 @@
 import Address from "../models/AddressMoel.js";
 import Order from "../models/OrderModel.js";
+import Product from "../models/ProductModel.js";
 
 export const postAddress =async(req, res)=>{
     const {locality,city,country,pin} = req.body;
-    console.log(locality,city,country,pin)
     try{
         // if(!locality || !city || !pin){
         //     return
@@ -59,17 +59,55 @@ export const deleteAddress = async(req,res)=>{
 }
 export const makeOrder=async(req, res)=>{
     const {items, totalAmount, address} = req.body;
-    console.log(items, totalAmount, address)
     try{
+
         const newOrder = await Order.create({
             user: req.user,
             address,
             items: items,
             totalAmount
         })
+    //    await Promise.all(items.map((item)=> 
+    //         Product.find(item.product)
+    //         // Product.findByIdAndUpdate(item.Product,
+    //         //     {$inc: {stock: -item.quantity}}
+    //         // )
+    //     ))
+        
         return res.json({
             message: "Order placed",
             order: newOrder
+        })
+    }catch(error){
+        return res.status(404).json({
+            error: error
+        })
+    }
+}
+export const getOrders =async(req, res)=>{
+    try{
+        const orders = await Order.find({user: req.user}).populate('address user items.product', 'city locality pin price title images quantity firstName lastName')
+        if(orders.length <=0){
+            return res.json({
+                orders: []
+            })
+        }
+        return res.json({
+                orders: orders
+            })
+    }catch(error){
+        return res.status(404).json({
+            error: error
+        })
+    }
+}
+export const cancelOrder =async(req, res)=>{
+    const {id} = req.params;
+    try{
+        const order = await Order.findByIdAndDelete(id)
+        return res.json({
+            message: "Order cancel",
+            order: order
         })
     }catch(error){
         return res.status(404).json({

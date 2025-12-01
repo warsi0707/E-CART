@@ -29,7 +29,7 @@ function App() {
         <Route path="/signup" element={<Signup/>}/>
         <Route path="/signin" element={userAuth?.isAuthenticated?<Home/>:<Signin/>}/>
         <Route path="/admin-dashboard" element={<AdminDashboard/>}/>
-        <Route path="/placed-order" element={<PlacedOrder/>}/>
+        <Route path="/placed-order/:id" element={<PlacedOrder/>}/>
       </Routes>
       <Footer/>
     </BrowserRouter>

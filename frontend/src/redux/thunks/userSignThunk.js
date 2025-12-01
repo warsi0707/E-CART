@@ -53,7 +53,6 @@ export const postAddressThunk = createAsyncThunk('fetch/postAddress', async({loc
             body: JSON.stringify({locality, city,country,pin})
         })
        const result = await response.json()
-       console.log(result)
         if(response.status ==200){
              return result
         }else{
@@ -99,13 +98,11 @@ export const deleteAddressThunk = createAsyncThunk('fetch/deleteAddress', async(
     }
 })
 export const orderThunk = createAsyncThunk('fetch/makeorder', async({products, totalAmount, address}, {rejectWithValue})=>{
-    // console.log(items)
     const items = products.map((item, indx)=>({
         product: item._id,
         quantity: item.quantity,
         price: item.amount
     }))
-    console.log(items)
     try{
         const response = await fetch(`${BackendUrl}/user/order`,{
             method: 'POST',
@@ -114,6 +111,41 @@ export const orderThunk = createAsyncThunk('fetch/makeorder', async({products, t
                 token: localStorage.getItem('token')
             },
             body: JSON.stringify({items, totalAmount, address})
+        })
+       const result = await response.json()
+        if(response.status ==200){
+             return result
+        }else{
+            return rejectWithValue(result)
+        }
+    }catch(error){
+        return rejectWithValue(error)
+    }
+})
+export const getOrdersThunk = createAsyncThunk('fetch/getOrders', async(_, {rejectWithValue})=>{
+    try{
+        const response = await fetch(`${BackendUrl}/user/orders`,{
+            headers: {
+                token: localStorage.getItem('token')
+            },
+        })
+       const result = await response.json()
+        if(response.status ==200){
+             return result
+        }else{
+            return rejectWithValue(result)
+        }
+    }catch(error){
+        return rejectWithValue(error)
+    }
+})
+export const cancelOrderThunk = createAsyncThunk('fetch/cancelOrders', async(id, {rejectWithValue})=>{
+    try{
+        const response = await fetch(`${BackendUrl}/user/order/${id}`,{
+            method: 'DELETE',
+            headers: {
+                token: localStorage.getItem('token')
+            },
         })
        const result = await response.json()
         if(response.status ==200){

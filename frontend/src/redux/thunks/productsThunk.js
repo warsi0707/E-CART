@@ -28,11 +28,9 @@ export const getProductsByIdThunks = createAsyncThunk('fetch/productsById', asyn
     }
 })
 export const getFilterProductsThunks = createAsyncThunk('fetch/filterProduct', async(query, {rejectWithValue})=>{
-    console.log(query)
     try{
         const response = await fetch(`${BackendUrl}/product/filter?query=${query}`)
         const result = await response.json()
-        console.log(result)
         if(response.status ==200){
             return result
         }else{

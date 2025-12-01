@@ -18,6 +18,7 @@ const producSlice = createSlice({
             state.productLoading = false
         })
         .addCase(getProductsThunks.fulfilled, (state, action)=>{
+            state.productLoading = false
             state.products = action.payload
         })
         .addCase(getProductsByIdThunks.pending, (state)=>{
@@ -38,7 +39,6 @@ const producSlice = createSlice({
         })
         .addCase(getFilterProductsThunks.fulfilled, (state, action)=>{
             state.productLoading = false
-            console.log(action.payload)
             state.products = action.payload.products
         })
     }

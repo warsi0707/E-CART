@@ -23,16 +23,20 @@ function MakeOrder() {
 
   const handleActive = useCallback((item) => {
     setAddress(item);
+    setError(false)
   }, []);
 
-  const handlePlaceOrder =()=>{
+  const handlePlaceOrder =async ()=>{
     if(Object.keys(address).length <=0){
       setError(true)
       return
     }
-    dispatch(orderThunk({address, products,totalAmount}))
+    const data =await dispatch(orderThunk({address, products,totalAmount}))
     setError(false)
-    // navigate("/placed-order")
+    if(data.meta.requestStatus === "fulfilled"){
+      navigate(`/placed-order/${data.payload.order._id}`)
+    }
+    
   }
   return (
     <div className="w-full p-2 md:w-[900px] mx-auto">

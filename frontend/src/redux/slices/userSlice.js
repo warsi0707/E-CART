@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit"
-import { deleteAddressThunk, getAddressThunk, orderThunk, postAddressThunk, userSigninThunk, userSignUpThunk } from "../thunks/userSignThunk"
+import { cancelOrderThunk, deleteAddressThunk, getAddressThunk, getOrdersThunk, orderThunk, postAddressThunk, userSigninThunk, userSignUpThunk } from "../thunks/userSignThunk"
 import toast from "react-hot-toast"
 import { postProductThunk } from "../thunks/sellerThunk"
 
@@ -16,7 +16,8 @@ const userSlice = createSlice({
         isAuthenticated: false,
         carts: cartItems.map((cart)=> ({...cart, quantity:cart.quantity, amount:cart.amount})),
         finalCart : localStorage.getItem('finalCartAmmount') || null,
-        adresses: []
+        adresses: [],
+        orders: []
     },  
     reducers: {
         authVerify: (state)=>{
@@ -59,7 +60,6 @@ const userSlice = createSlice({
         addToCart: (state,action)=>{
             const items = action.payload
             const existing = state.carts.find((e)=>e._id === items._id)
-            console.log(existing)
             if(existing){
                existing.quantity +=1
                existing.amount = existing.quantity * existing.price
@@ -81,9 +81,7 @@ const userSlice = createSlice({
             localStorage.setItem("carts", JSON.stringify(state.carts))
         },
         increaseQnt: (state, action)=>{
-            console.log(action.payload)
             const existing = state.carts.find((item)=> item._id === action.payload)
-            console.log(existing)
             if(existing){
                 existing.quantity +=1
                 existing.amount = existing.quantity * existing.price
@@ -94,9 +92,7 @@ const userSlice = createSlice({
             localStorage.setItem("carts", JSON.stringify(state.carts))
         },
         decreaseQnt: (state, action)=>{
-            console.log(action.payload)
             const existing = state.carts.find((item)=> item._id === action.payload)
-            console.log(existing)
             if(existing){
                 existing.quantity -=1
                 if(existing.quantity <=0){
@@ -137,10 +133,8 @@ const userSlice = createSlice({
            state.logLoading = false
         })
         .addCase(postProductThunk.rejected, (action)=>{
-            console.log(action.payload)
         })
         .addCase(postProductThunk.fulfilled, (state ,action)=>{
-            console.log(action.payload)
         })
         .addCase(getAddressThunk.rejected, (action)=>{
 
@@ -157,14 +151,28 @@ const userSlice = createSlice({
         .addCase(postAddressThunk.rejected, (action)=>{
         })
         .addCase(postAddressThunk.fulfilled, (state ,action)=>{
-            console.log(action.payload)
             state.adresses = [...state.adresses, action.payload.address]
         })
         .addCase(orderThunk.rejected, (action)=>{
         })
         .addCase(orderThunk.fulfilled, (state ,action)=>{
-            console.log(action.payload)
+            state.carts = []
+            state.finalCart= []
+            localStorage.removeItem('carts')
+            localStorage.removeItem('finalCartAmmount')
             // state.adresses = [...state.adresses, action.payload.address]
+        })
+        .addCase(getOrdersThunk.rejected, (action)=>{
+        })
+        .addCase(getOrdersThunk.fulfilled, (state ,action)=>{
+            state.orders = action.payload.orders
+            // state.adresses = [...state.adresses, action.payload.address]
+        })
+        .addCase(cancelOrderThunk.rejected, (state, action)=>{
+        })
+        .addCase(cancelOrderThunk.fulfilled, (state, action)=>{
+            toast.success(action.payload.message)
+            state.orders = state.orders.filter((item)=> item._id !== action.payload.order._id)
         })
     }
 })
