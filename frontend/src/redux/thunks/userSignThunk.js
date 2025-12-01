@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 
 export const userSigninThunk = createAsyncThunk('fetch/signin', async({email, password, confirmPassword}, {rejectWithValue})=>{
     try{
-        const response = await fetch(`${BackendUrl}/auth/signin`,{
+        const response = await fetch(`${BackendUrl}/api/v1/auth/signin`,{
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -25,7 +25,7 @@ export const userSigninThunk = createAsyncThunk('fetch/signin', async({email, pa
 })
 export const userSignUpThunk = createAsyncThunk('fetch/signup', async({email,role, password, firstName, lastName,mobile}, {rejectWithValue})=>{
     try{
-        const response = await fetch(`${BackendUrl}/auth/signup`,{
+        const response = await fetch(`${BackendUrl}/api/v1/auth/signup`,{
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -44,7 +44,7 @@ export const userSignUpThunk = createAsyncThunk('fetch/signup', async({email,rol
 })
 export const postAddressThunk = createAsyncThunk('fetch/postAddress', async({locality, city,country,pin}, {rejectWithValue})=>{
     try{
-        const response = await fetch(`${BackendUrl}/user/address`,{
+        const response = await fetch(`${BackendUrl}/api/v1/user/address`,{
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -64,7 +64,7 @@ export const postAddressThunk = createAsyncThunk('fetch/postAddress', async({loc
 })
 export const getAddressThunk = createAsyncThunk('fetch/getAddress', async(_, {rejectWithValue})=>{
     try{
-        const response = await fetch(`${BackendUrl}/user/address`,{
+        const response = await fetch(`${BackendUrl}/api/v1/user/address`,{
             headers: {
                 token: localStorage.getItem('token')
             },
@@ -81,7 +81,7 @@ export const getAddressThunk = createAsyncThunk('fetch/getAddress', async(_, {re
 })
 export const deleteAddressThunk = createAsyncThunk('fetch/deleteAddress', async(id, {rejectWithValue})=>{
     try{
-        const response = await fetch(`${BackendUrl}/user/address/${id}`,{
+        const response = await fetch(`${BackendUrl}/api/v1/user/address/${id}`,{
             method: 'DELETE',
             headers: {
                 token: localStorage.getItem('token')
@@ -104,7 +104,7 @@ export const orderThunk = createAsyncThunk('fetch/makeorder', async({products, t
         price: item.amount
     }))
     try{
-        const response = await fetch(`${BackendUrl}/user/order`,{
+        const response = await fetch(`${BackendUrl}/api/v1/user/order`,{
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",
@@ -124,7 +124,7 @@ export const orderThunk = createAsyncThunk('fetch/makeorder', async({products, t
 })
 export const getOrdersThunk = createAsyncThunk('fetch/getOrders', async(_, {rejectWithValue})=>{
     try{
-        const response = await fetch(`${BackendUrl}/user/orders`,{
+        const response = await fetch(`${BackendUrl}/api/v1/user/orders`,{
             headers: {
                 token: localStorage.getItem('token')
             },
@@ -141,7 +141,7 @@ export const getOrdersThunk = createAsyncThunk('fetch/getOrders', async(_, {reje
 })
 export const cancelOrderThunk = createAsyncThunk('fetch/cancelOrders', async(id, {rejectWithValue})=>{
     try{
-        const response = await fetch(`${BackendUrl}/user/order/${id}`,{
+        const response = await fetch(`${BackendUrl}/api/v1/user/order/${id}`,{
             method: 'DELETE',
             headers: {
                 token: localStorage.getItem('token')

@@ -3,7 +3,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const getProductsThunks = createAsyncThunk('fetch/products', async(_, {rejectWithValue})=>{
     try{
-        const response = await fetch(`${BackendUrl}/product`)
+        const response = await fetch(`${BackendUrl}/api/v1/product`)
         const result = await response.json()
         if(response.status ==200){
             return result
@@ -16,7 +16,7 @@ export const getProductsThunks = createAsyncThunk('fetch/products', async(_, {re
 })
 export const getProductsByIdThunks = createAsyncThunk('fetch/productsById', async(id, {rejectWithValue})=>{
     try{
-        const response = await fetch(`${BackendUrl}/product/${id}`)
+        const response = await fetch(`${BackendUrl}/api/v1/product/${id}`)
         const result = await response.json()
         if(response.status ==200){
             return result
@@ -29,7 +29,7 @@ export const getProductsByIdThunks = createAsyncThunk('fetch/productsById', asyn
 })
 export const getFilterProductsThunks = createAsyncThunk('fetch/filterProduct', async(query, {rejectWithValue})=>{
     try{
-        const response = await fetch(`${BackendUrl}/product/filter?query=${query}`)
+        const response = await fetch(`${BackendUrl}/api/v1/product/filter?query=${query}`)
         const result = await response.json()
         if(response.status ==200){
             return result
