@@ -1,7 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit"
 import { cancelOrderThunk, deleteAddressThunk, getAddressThunk, getOrdersThunk, orderThunk, postAddressThunk, userSigninThunk, userSignUpThunk } from "../thunks/userSignThunk"
 import toast from "react-hot-toast"
-import { postProductThunk } from "../thunks/sellerThunk"
+
 
 const cartItems = JSON.parse(localStorage.getItem('carts')) || []
 const finalCart = JSON.parse(localStorage.getItem('finalCart')) || []
@@ -11,6 +11,8 @@ const userSlice = createSlice({
     initialState : {
         isDarkTheme: JSON.parse(localStorage.getItem('isDark')) || false,
         logLoading: false,
+        orderLoading: false,
+        addressLoading: false,
         user: JSON.parse(localStorage.getItem('user')) || null,
         token: localStorage.getItem('token'),
         isAuthenticated: false,
@@ -132,14 +134,11 @@ const userSlice = createSlice({
            toast.success(action.payload.message)
            state.logLoading = false
         })
-        .addCase(postProductThunk.rejected, (action)=>{
-        })
-        .addCase(postProductThunk.fulfilled, (state ,action)=>{
-        })
-        .addCase(getAddressThunk.rejected, (action)=>{
-
+        .addCase(getAddressThunk.pending, (state)=>{
+            state.addressLoading = true
         })
         .addCase(getAddressThunk.fulfilled, (state ,action)=>{
+            state.addressLoading = false
             state.adresses = action.payload.address
         })
         .addCase(deleteAddressThunk.rejected, (action)=>{
@@ -162,11 +161,15 @@ const userSlice = createSlice({
             localStorage.removeItem('finalCartAmmount')
             // state.adresses = [...state.adresses, action.payload.address]
         })
-        .addCase(getOrdersThunk.rejected, (action)=>{
+        .addCase(getOrdersThunk.pending, (state,action)=>{
+            state.orderLoading = true
+        })
+        .addCase(getOrdersThunk.rejected, (state,action)=>{
+            state.orderLoading = false
         })
         .addCase(getOrdersThunk.fulfilled, (state ,action)=>{
+            state.orderLoading = false
             state.orders = action.payload.orders
-            // state.adresses = [...state.adresses, action.payload.address]
         })
         .addCase(cancelOrderThunk.rejected, (state, action)=>{
         })

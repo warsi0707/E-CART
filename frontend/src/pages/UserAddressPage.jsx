@@ -3,6 +3,7 @@ import { lazy } from "react";
 import {useDispatch, useSelector} from "react-redux"
 import { deleteAddressThunk, getAddressThunk } from "../redux/thunks/userSignThunk";
 import { useState } from "react";
+import AddressSkeleton from "../components/skeleton/AddressSkeleton";
 const AddressCard = lazy(()=> import("../components/addresses/AddressCard"))
 const PostAddressPage = lazy(()=>import("../components/addresses/PostAddressPage"))
 
@@ -10,6 +11,7 @@ const PostAddressPage = lazy(()=>import("../components/addresses/PostAddressPage
 export default function UserAddress(){
     const dispatch = useDispatch()
     const addresses = useSelector(state=> state.user.adresses)
+    const loading = useSelector(state=> state.user.addressLoading)
     const [isPosting, setIsPosting] = useState(false)
 
     const handleRemoveAddress =(id)=>{
@@ -19,6 +21,11 @@ export default function UserAddress(){
     useEffect(()=>{
         dispatch(getAddressThunk())
     },[])
+    if(loading){
+        return (
+            <AddressSkeleton/>
+        )
+    }
     return (
         <>
         <div className="w-full flex flex-col gap-5  min-h-screen px-2">

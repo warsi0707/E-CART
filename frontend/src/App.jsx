@@ -1,6 +1,8 @@
 import {BrowserRouter, Routes, Route} from "react-router"
-import { lazy } from "react"
+import { lazy, Suspense } from "react"
 import { useSelector } from "react-redux"
+import HomeSkeleton from "./components/skeleton/HomeSkeleton"
+import Loading from "./components/skeleton/Loading"
 
 const Footer = lazy(()=>import("./pages/Footer"))
 const Home = lazy(()=>import("./pages/Home"))
@@ -19,8 +21,9 @@ function App() {
   const userAuth = useSelector(state => state.user)
   return (
     <BrowserRouter>
+     {/* <Suspense fallback={<Loading/>}> */}
     <Navbar/>
-      <Routes>
+      <Routes>  
         <Route path="/" element={<Home/>}/>
         <Route path="/product/:id" element={<ProductDetail/>}/>
         <Route path="/cart-items" element={<CarItems/>}/>
@@ -30,8 +33,10 @@ function App() {
         <Route path="/signin" element={userAuth?.isAuthenticated?<Home/>:<Signin/>}/>
         <Route path="/admin-dashboard" element={<AdminDashboard/>}/>
         <Route path="/placed-order/:id" element={<PlacedOrder/>}/>
+        
       </Routes>
       <Footer/>
+      {/* </Suspense> */}
     </BrowserRouter>
   )
 }

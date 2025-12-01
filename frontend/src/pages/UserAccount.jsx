@@ -1,4 +1,4 @@
-import { lazy, memo, useState } from "react";
+import { lazy, memo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { userLogout } from "../redux/slices/userSlice";
 const SellerProduct = lazy(()=> import("./SellerProduct"))
@@ -9,7 +9,7 @@ const MyOrderPage = lazy(()=> import("./MyOrderPage"))
 function UserAccount() {
   const dispatch = useDispatch()
   const userAuth = useSelector(state => state.user)
-  const [userMenu, setUserMenu] = useState([
+  const userMenu =[
     {
       icon: <i className="fa-solid fa-car-side"></i>,
       title: "My orders",
@@ -22,8 +22,11 @@ function UserAccount() {
       icon: <i className="fa-solid fa-lock"></i>,
       title: "Login & Security",
     },
-  ]);
+  ]
   const [activeMenu, setActivemenu] = useState("My orders")
+  useEffect(()=>{
+    setActivemenu("My orders")
+  },[])
 
   return (
     <div className="min-h-screen px-3 lg:w-[1100px] mx-auto">

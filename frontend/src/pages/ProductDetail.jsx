@@ -6,6 +6,7 @@ import { Link, useParams } from "react-router";
 import { getProductsByIdThunks } from "../redux/thunks/productsThunk";
 import { addToCart } from "../redux/slices/userSlice";
 import { BackendUrl } from "../utils/Backendurl";
+import DetailSkeleton from "../components/skeleton/DetailSkeleton";
 
 export default function ProductDetail() {
   const { id } = useParams();
@@ -26,12 +27,10 @@ export default function ProductDetail() {
   }, [product]);
   if (loading) {
     return (
-      <div>
-        <p>Loading...</p>
-      </div>
+     <DetailSkeleton/>
     );
   }
-  return (    
+  return (   
     <div className="p-8 md:p-14 md:px-32 flex flex-col gap-5 min-h-screen mb-10">
       <div className="mt-8 flex flex-col justify-between">
          <div className="pb-10">
