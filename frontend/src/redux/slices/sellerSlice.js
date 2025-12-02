@@ -1,11 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { filterProductThunk, getSellerProductThunk, postProductThunk, removeProductThunk, updateStatusThunk } from "../thunks/sellerThunk";
+import { filterProductThunk, getSellerProductThunk, postProductThunk, removeProductThunk, sellerCancelOrdersThunk, sellerOrdersStatusThunk, sellerOrdersThunk, updateStatusThunk } from "../thunks/sellerThunk";
 
 const sellerSlice = createSlice({
     name: 'seller',
     initialState: {
         products :[],
-        loading: false
+        loading: false,
+        orders: []
     },
     reducers: {},
     extraReducers: (builder)=>{
@@ -59,6 +60,40 @@ const sellerSlice = createSlice({
         .addCase(filterProductThunk.fulfilled, (state,action)=>{
             state.loading = false
             state.products = action.payload.products
+        })
+        .addCase(sellerOrdersThunk.pending, (state)=>{
+            state.loading = true  
+        })
+        .addCase(sellerOrdersThunk.rejected, (state)=>{
+            state.loading = false  
+        })
+        .addCase(sellerOrdersThunk.fulfilled, (state,action)=>{
+            state.loading = false  
+            state.orders = action.payload.orders
+        })
+        .addCase(sellerOrdersStatusThunk.pending, (state)=>{
+            state.loading = true
+        })
+        .addCase(sellerOrdersStatusThunk.rejected, (state)=>{
+            state.loading = false
+        })
+        .addCase(sellerOrdersStatusThunk.fulfilled, (state,action)=>{
+            state.loading = false
+            state.orders.find((item)=> {
+                if(item._id === action.payload.order._id){
+                    item.status = action.payload.order.status
+                }
+            })
+        })
+        .addCase(sellerCancelOrdersThunk.pending, (state)=>{
+            state.loading = true
+        })
+        .addCase(sellerCancelOrdersThunk.rejected, (state)=>{
+            state.loading = false
+        })
+        .addCase(sellerCancelOrdersThunk.fulfilled, (state,action)=>{
+            state.loading = false
+            state.orders = state.orders.filter((item)=> item._id !== action.payload._id)
         })
     }
 })

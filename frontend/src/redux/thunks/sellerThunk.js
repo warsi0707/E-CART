@@ -86,3 +86,52 @@ export const filterProductThunk = createAsyncThunk('fetch/filter', async(categor
         return rejectWithValue(error)
     }
 })
+export const sellerOrdersThunk = createAsyncThunk('fetch/sellerOrders', async(_, {rejectWithValue})=>{
+    try{
+        const response = await fetch(`${BackendUrl}/api/v1/seller/orders`,{
+            headers: {
+                token: localStorage.getItem('token'),
+            }
+        })
+        const result = await response.json()
+        if(response.status ==200){
+            return result
+        }
+    }catch(error){
+        return rejectWithValue(error)
+    }
+})
+export const sellerOrdersStatusThunk = createAsyncThunk('fetch/sellerOrdersStatus', async({id, status}, {rejectWithValue})=>{
+    try{
+        const response = await fetch(`${BackendUrl}/api/v1/seller/order/status/${id}`,{
+            method: 'PATCH',
+            headers: {
+                "Content-Type": "application/json",
+                token: localStorage.getItem('token'),
+            },
+            body: JSON.stringify({status})
+        })
+        const result = await response.json()
+        if(response.status ==200){
+            return result
+        }
+    }catch(error){
+        return rejectWithValue(error)
+    }
+})
+export const sellerCancelOrdersThunk = createAsyncThunk('fetch/sellerCancelOrder', async(id, {rejectWithValue})=>{
+    try{
+        const response = await fetch(`${BackendUrl}/api/v1/seller/order/${id}`,{
+            method: 'DELETE',
+            headers: {
+                token: localStorage.getItem('token'),
+            }
+        })
+        const result = await response.json()
+        if(response.status ==200){
+            return result
+        }
+    }catch(error){
+        return rejectWithValue(error)
+    }
+})

@@ -1,5 +1,6 @@
 import { lazy, memo, useState } from "react"
 import {Link} from "react-router"
+import { BackendUrl } from "../../utils/Backendurl"
 const UpdateStatus = lazy(()=> import("../../pages/UpdateStatus"))
 const StatusCard = lazy(()=> import("./StatusCard"))
 
@@ -8,7 +9,7 @@ function SellerProcutCard({product, onDelete}){
     return (
         <>
         <div className="w-full p-2 border border-gray-300 shadow-md rounded-md flex items-center justify-between">
-           <img src="/1.png" className="h-16 rounded-md" alt="" />
+           <img src={`${BackendUrl}/${product.images[0]}`} className="h-16 w-20 rounded-md" alt="" />
            <div>
                 <Link to={"#"} className="text-purple-primary hover:underline font-semibold">{product?.title}</Link>
                 <p className="text-sm">{product?.category}</p>
@@ -17,7 +18,7 @@ function SellerProcutCard({product, onDelete}){
            <p>{product.stock}</p>
            <div className="flex items-center">
                 <i className="fa-solid fa-indian-rupee-sign"></i>
-                <p>1200</p>
+                <p>{product.price}</p>
            </div>
            <div className="flex items-center gap-2">
             <Link to={""} title="Details" className=" text-md">

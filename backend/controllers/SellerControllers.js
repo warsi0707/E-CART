@@ -1,6 +1,6 @@
-import { json } from "express";
 import Product from "../models/ProductModel.js";
 import cloudinary from "../utils/Cloudinary.js";
+import Order from "../models/OrderModel.js";
 
 
 export const postProduct = async (req, res) => {
@@ -17,6 +17,21 @@ export const postProduct = async (req, res) => {
   //   }).end()
   // })
   // console.log(uploadsImage)
+
+  // const uploadPromises = req.files.map((file =>{
+  //   return new Promise((resolve, reject)=>{
+  //     const upload_stream = cloudinary.uploader.upload_stream((error, uploadResult)=>({
+  //       folder: "uploads",
+  //       resource_type: 'auto'
+  //     }))
+      
+  //   })
+  //   if(upload_stream.error){
+  //       reject(error)
+  //     }
+  // }))
+  // const results = await Promise.all(uploadPromises);
+  // console.log(results)
 
   try {
     if (!title || !price  || !stock) {
@@ -132,6 +147,47 @@ export const filterProduct =async(req, res)=>{
   }catch(error){
     return res.status(404).json({
       error : error
+    })
+  }
+}
+export const getSellerOrders = async(req,res)=>{
+  try{
+    const products = await Product.find({ownerId: req.user})
+    if(products.length <=0){
+      return res.json({
+        orders: []
+      })
+    }
+    const orders = await Order.find({'items.product': {$in: products}}).populate('address user items.product', 'city locality pin price title images quantity firstName lastName')
+    return res.json({
+      orders: orders
+    })
+  }catch(error){
+    return res.status(404).json({
+      error: error
+    })
+  }
+}
+export const updateOrderStatus =async(req, res)=>{
+  const {id} = req.params
+  try{
+    const orders = await Order.findByIdAndUpdate(id, req.body,{new: true})
+    return res.json({
+      order: orders
+    })
+  }catch(error){
+    return res.status(404).json({
+      error: error
+    })
+  }
+}
+export const sellerCancelOrder = async(req, res)=>{
+  try{
+    const order = await Order.findByIdAndDelete(req.params.id)
+    return res.json(order)
+  }catch(error){
+    return res.status(404).json({
+      error: error
     })
   }
 }

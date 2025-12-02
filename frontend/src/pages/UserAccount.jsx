@@ -4,6 +4,7 @@ import { userLogout } from "../redux/slices/userSlice";
 const SellerProduct = lazy(()=> import("./SellerProduct"))
 const UserAddress = lazy(()=> import("./UserAddressPage"))
 const MyOrderPage = lazy(()=> import("./MyOrderPage"))
+const SellerOrders = lazy(()=> import("../components/seller/SellerOrders"))
 
 
 function UserAccount() {
@@ -44,10 +45,17 @@ function UserAccount() {
                     </button>
                 ))}
                 {userAuth?.user?.role === "SELLER" &&
-                <button  onClick={()=> setActivemenu("Seller")} className={`${activeMenu ==="Seller"?"bg-purple-secondry border": "bg-white"} hover:bg-gray-primary flex gap-2 items-center justify-center md:justify-start w-full p-1 lg:p-2 cursor-pointer rounded-sm  text-xl border-gray-300  text-purple-primary`}>
+                <>
+                 <button  onClick={()=> setActivemenu("Seller")} className={`${activeMenu ==="Seller"?"bg-purple-secondry border": "bg-white"} hover:bg-gray-primary flex gap-2 items-center justify-center md:justify-start w-full p-1 lg:p-2 cursor-pointer rounded-sm  text-xl border-gray-300  text-purple-primary`}>
                   <p className="text-purple-primary bg-white p-1 rounded-md"><i className="fa-solid fa-user"></i></p>
                   <p className="text-sm hidden lg:flex">Seller</p>
-                </button>}
+                </button>
+                 <button  onClick={()=> setActivemenu("Seller-orders")} className={`${activeMenu ==="Seller-orders"?"bg-purple-secondry border": "bg-white"} hover:bg-gray-primary flex gap-2 items-center justify-center md:justify-start w-full p-1 lg:p-2 cursor-pointer rounded-sm  text-xl border-gray-300  text-purple-primary`}>
+                  <p className="text-purple-primary bg-white p-1 rounded-md"><i className="fa-solid fa-user"></i></p>
+                  <p className="text-sm hidden lg:flex">Seller Orders</p>
+                </button>
+                </>
+               }
           </div>
           <div className="py-5 border-t border-gray-primary w-full">
             <button onClick={()=>dispatch(userLogout())} className={` flex gap-2 items-center w-full p-1 lg:p-2 cursor-pointer rounded-sm hover:bg-red-300 hover:text-white text-xl border-gray-300  text-purple-primary`}>
@@ -60,6 +68,7 @@ function UserAccount() {
             {activeMenu === "My orders" && <MyOrderPage/>}
             {activeMenu === "My Addresses" && <UserAddress/>}
             {activeMenu === "Seller" && <SellerProduct/>}
+            {activeMenu === "Seller-orders" && <SellerOrders/>}
         </div>
       </div>
     </div>
