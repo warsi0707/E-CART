@@ -35,7 +35,7 @@ export default function CarItems(){
             </div>
             </div>
         )
-    }
+    }else{
     return (
         <div className="w-full lg:w-[1100px] min-h-screen mx-auto py-5 flex flex-col gap-5">
             <div className="flex items-center gap-3 ">
@@ -55,4 +55,4 @@ export default function CarItems(){
             </div>
         </div>
     )
-}
+}}
