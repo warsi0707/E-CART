@@ -14,8 +14,6 @@ import userRouter from './routes/userRoute.js'
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-
-ConnectDB()
 app.use(express.json())
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use(cors({
@@ -31,8 +29,13 @@ app.use("/api/v1/seller", sellerRouter)
 app.use("/api/v1/product", productRouter)
 app.use("/api/v1/user", userRouter)
 
-const main =()=>{
-    app.listen(3000)
-    console.log("App listing on port 3000")
+const main =async ()=>{
+    try{
+        await ConnectDB()
+        app.listen(3000)
+        console.log("App listing on port 3000")
+    }catch(error){
+        console.log(error)
+    }
 }
 main()
