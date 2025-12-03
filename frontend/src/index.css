@@ -49,9 +49,7 @@ body {
   min-height: 100vh;
 }
 
-
-
-
 html, body{
-    @apply font-primary
+    @apply font-primary;
+    
 }

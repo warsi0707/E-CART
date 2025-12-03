@@ -1,11 +1,14 @@
-import { memo } from "react"
+import { memo } from "react";
 
-function BackButton({onBack}){
-    return (
-       <button onClick={onBack} className="flex items-center  gap-1 p-1  rounded-md cursor-pointer transition-all duration-300">
-           <i className="fa-solid fa-arrow-left-long"></i>
-            <p>Back</p>
-       </button>
-    )
+function BackButton({ onBack }) {
+  return (
+    <button
+      onClick={onBack}
+      className="flex items-center  gap-1 p-1  rounded-md cursor-pointer transition-all duration-300"
+    >
+      <i className="fa-solid fa-arrow-left-long"></i>
+      <p>Back</p>
+    </button>
+  );
 }
-export default memo(BackButton)
+export default memo(BackButton);
