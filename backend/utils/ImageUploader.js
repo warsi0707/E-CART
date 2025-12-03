@@ -1,4 +1,4 @@
-import multer from "multer"
+import multer from "multer";
 
 // const storage = multer.diskStorage({
 //   destination: function (req, file, cb) {
@@ -13,21 +13,33 @@ import multer from "multer"
 
 // export default upload;
 
-
-const storage = multer.memoryStorage()
-
-const upload = multer({
-  storage: storage,
-  limits: {
-    fileSize: 5 * 1024 * 1024
-  },
+// const storage = multer.memoryStorage();
+const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'uploads/')
+    cb(null, "uploads/");
   },
   filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now()
-    cb(null,uniqueSuffix + '-' + file.originalname  )
-  }
-})
+    const uniqueSuffix = Date.now();
+    cb(null, uniqueSuffix + "-" + file.originalname);
+  },
+});
 
-export default upload
+const upload = multer({
+  storage,
+  limits: { fileSize: 10 * 1024 * 1024 },
+});
+// const upload = multer.diskStorage({
+//   // storage: storage,
+//   // limits: {
+//   //   fileSize: 10 * 1024 * 1024,
+//   // },
+//   destination: function (req, file, cb) {
+//     cb(null, "uploads/");
+//   },
+//   filename: function (req, file, cb) {
+//     const uniqueSuffix = Date.now();
+//     cb(null, uniqueSuffix + "-" + file.originalname);
+//   },
+// });
+
+export default upload;

@@ -18,7 +18,7 @@ export default function Carousel() {
         modules={[Pagination, Navigation]}
         className="h-96 w-full object-cover rounded-md"
       >
-        <SwiperSlide className="text-center text-2xl bg-red-400 object-center">
+        <SwiperSlide className="text-center text-2xl object-center">
           <img
             className="h-full w-full object-fill"
             src="/carousel/shoes.png"

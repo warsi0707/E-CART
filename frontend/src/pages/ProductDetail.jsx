@@ -14,6 +14,7 @@ export default function ProductDetail() {
   const product = useSelector((state) => state.product.detailproduct);
   const loading = useSelector((state) => state.product.productLoading);
   const [activeImage, setActiveImage] = useState("");
+  console.log(product);
 
   useEffect(() => {
     if (!id) return;
@@ -26,16 +27,14 @@ export default function ProductDetail() {
     }
   }, [product]);
   if (loading) {
-    return (
-     <DetailSkeleton/>
-    );
+    return <DetailSkeleton />;
   }
-  return (   
+  return (
     <div className="p-8 md:p-14 md:px-32 flex flex-col gap-5 min-h-screen mb-10">
       <div className="mt-8 flex flex-col justify-between">
-         <div className="pb-10">
-            <BackButton onBack={()=> history.back()}/>
-         </div>
+        <div className="pb-10">
+          <BackButton onBack={() => history.back()} />
+        </div>
         <div>
           <h1 className="text-xl md:text-4xl font-semibold">{product.title}</h1>
           <p className="text-gray-400">{product.category}</p>
@@ -75,33 +74,42 @@ export default function ProductDetail() {
       </div>
       <div className=" w-full py-2 h-screen  flex flex-col  gap-2 md:grid grid-cols-5 ">
         <div className=" w-full h-full py-2 col-span-3 md:mr-10 md:pr-28 flex flex-col gap-5">
-             <div className="w-full h-full ">
-                <div className="flex h-full py-2 pb-3 flex-col  gap-3">
-                    <h1 className="text-md text-2xl font-semibold">{product?.title}</h1>
-                    <div className="flex">
-                        <Star/>
-                        <Star/>
-                        <Star/>
-                    </div>
-                    <div className="flex ">
-                        <p>Base Price:</p>
-                        <div className="flex items-center"><i className="fa-solid fa-indian-rupee-sign"></i><p>{product?.price}</p></div>
-                    </div>
-                    <div className="flex gap-2">
-                        <button onClick={()=> dispatch(addToCart(product))} className="bg-purple-primary flex items-center p-2 rounded-md text-white cursor-pointer">
-                            <i className="fa-solid fa-cart-shopping"></i>
-                            <p className="text-sm">Add to cart</p>
-                        </button>
-                        <button className="bg-purple-secondry p-2 rounded-md px-5 text-purple-primary text-sm cursor-pointer">Buy now</button>
-                        {/* <button className="border p-2 rounded-md border-gray-300"><i className="fa-regular fa-heart"></i></button> */}
-                    </div>
-                    <button className="bg-slate-200 w-96 p-2 rounded-md flex items-center justify-center gap-2 text-sm border border-purple-primary cursor-pointer">
-                       <i className="fa-solid fa-pen"></i>
-                        <p>Write a review</p>
-                    </button>
-                  
+          <div className="w-full h-full ">
+            <div className="flex h-full py-2 pb-3 flex-col  gap-3">
+              <h1 className="text-md text-2xl font-semibold">
+                {product?.title}
+              </h1>
+              <div className="flex">
+                <Star />
+                <Star />
+                <Star />
+              </div>
+              <div className="flex ">
+                <p>Base Price:</p>
+                <div className="flex items-center">
+                  <i className="fa-solid fa-indian-rupee-sign"></i>
+                  <p>{product?.price}</p>
                 </div>
+              </div>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => dispatch(addToCart(product))}
+                  className="bg-purple-primary flex items-center p-2 rounded-md text-white cursor-pointer"
+                >
+                  <i className="fa-solid fa-cart-shopping"></i>
+                  <p className="text-sm">Add to cart</p>
+                </button>
+                <button className="bg-purple-secondry p-2 rounded-md px-5 text-purple-primary text-sm cursor-pointer">
+                  Buy now
+                </button>
+                {/* <button className="border p-2 rounded-md border-gray-300"><i className="fa-regular fa-heart"></i></button> */}
+              </div>
+              <button className="bg-slate-200 w-96 p-2 rounded-md flex items-center justify-center gap-2 text-sm border border-purple-primary cursor-pointer">
+                <i className="fa-solid fa-pen"></i>
+                <p>Write a review</p>
+              </button>
             </div>
+          </div>
           {/* Description */}
           <div className="space-y-3 flex h-full flex-col justify-center items-center md:items-start border-b border-gray-300 pb-5">
             <h1 className="text-3xl">Description</h1>
