@@ -14,7 +14,6 @@ export default function ProductDetail() {
   const product = useSelector((state) => state.product.detailproduct);
   const loading = useSelector((state) => state.product.productLoading);
   const [activeImage, setActiveImage] = useState("");
-  console.log(product);
 
   useEffect(() => {
     if (!id) return;
@@ -26,6 +25,7 @@ export default function ProductDetail() {
       setActiveImage(product?.images[0]);
     }
   }, [product]);
+  
   if (loading) {
     return <DetailSkeleton />;
   }

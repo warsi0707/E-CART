@@ -1,8 +1,6 @@
 import {BrowserRouter, Routes, Route} from "react-router"
-import { lazy, Suspense } from "react"
+import { lazy } from "react"
 import { useSelector } from "react-redux"
-import HomeSkeleton from "./components/skeleton/HomeSkeleton"
-import Loading from "./components/skeleton/Loading"
 
 const Footer = lazy(()=>import("./pages/Footer"))
 const Home = lazy(()=>import("./pages/Home"))

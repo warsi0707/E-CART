@@ -23,4 +23,4 @@ const AuthChecker =async(req, res, next)=>{
         })
     }
 }
-export default AuthChecker
+export default AuthChecker;

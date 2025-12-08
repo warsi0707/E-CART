@@ -1,4 +1,6 @@
-export default function CategoryCard({title}){
+import { memo } from "react"
+
+ function CategoryCard({title}){
     return (
         <div className="flex  md:w-32  flex-col items-center">
             <div className="bg-purple-secondry w-10 h-10 md:w-28 rounded-md md:h-24 flex items-center justify-center ">
@@ -8,3 +10,4 @@ export default function CategoryCard({title}){
         </div>
     )
 }
+export default memo(CategoryCard)
