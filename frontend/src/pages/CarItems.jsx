@@ -20,7 +20,7 @@ export default function CarItems() {
   useEffect(() => {
     dispatch(getCart());
   }, []);
-  if (cartItems.length <= 0) {
+  if (cartItems?.length <= 0) {
     return (
       <div className="w-full lg:w-[1100px] min-h-screen mx-auto py-5 ">
         <div className="flex items-center gap-3 ">
