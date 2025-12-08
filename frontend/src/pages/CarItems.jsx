@@ -55,7 +55,7 @@ export default function CarItems() {
                 />
               ))}
           </div>
-          {cartItems.length >= 0 && (
+          {cartItems?.length >= 0 && (
             <div className=" w-full  col-span-3 flex flex-col gap-3    rounded-md text-sm">
               <CartItemPrices title={"Make order"} onNext={handleMakeOrder} />
             </div>
