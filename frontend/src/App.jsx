@@ -1,6 +1,7 @@
 import {BrowserRouter, Routes, Route} from "react-router"
-import { lazy } from "react"
+import { lazy, Suspense } from "react"
 import { useSelector } from "react-redux"
+import Loading from "./components/skeleton/Loading"
 
 const Footer = lazy(()=>import("./pages/Footer"))
 const Home = lazy(()=>import("./pages/Home"))
@@ -18,7 +19,7 @@ function App() {
   const {isAuthenticated} = useSelector(state => state.user.user)
   return (
     <BrowserRouter>
-     {/* <Suspense fallback={<Loading/>}> */}
+     <Suspense fallback={<Loading/>}>
     <Navbar/>
       <Routes>  
         <Route path="/" element={<Home/>}/>
@@ -33,7 +34,7 @@ function App() {
         
       </Routes>
       <Footer/>
-      {/* </Suspense> */}
+      </Suspense>
     </BrowserRouter>
   )
 }

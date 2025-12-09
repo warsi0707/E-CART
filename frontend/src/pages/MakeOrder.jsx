@@ -53,11 +53,11 @@ function MakeOrder() {
             <div className="flex flex-col gap-3">
               <div className="flex flex-col  justify-between w-full gap-2">
                 <div className="flex gap-2 ">
-                  <p>{user.firstName}</p>
-                  <p>{user.lastName}</p>
+                  <p>{user?.firstName}</p>
+                  <p>{user?.lastName}</p>
                 </div>
-                <p>{user.email}</p>
-                <p>+91 {user.contact}</p>
+                <p>{user?.email}</p>
+                <p>+91 {user?.contact}</p>
               </div>
             </div>
           </div>
