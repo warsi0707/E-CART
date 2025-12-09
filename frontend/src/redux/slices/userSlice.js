@@ -10,32 +10,38 @@ const userSlice = createSlice({
     name: 'user',
     initialState : {
         isDarkTheme: JSON.parse(localStorage.getItem('isDark')) || false,
-        logLoading: false,
-        orderLoading: false,
-        addressLoading: false,
-        user: JSON.parse(localStorage.getItem('user')) || null,
-        token: localStorage.getItem('token'),
-        isAuthenticated: false,
+        user: {
+            loading: false,
+            items: JSON.parse(localStorage.getItem('user')) || null,
+            token: localStorage.getItem('token'),
+            isAuthenticated: false,
+        },
+        orders: {
+            items: [],
+            loading: false
+        },
+        address: {
+            addressLoading: false,
+            items: []
+        },
         carts: cartItems.map((cart)=> ({...cart, quantity:cart.quantity, amount:cart.amount})),
         finalCart : localStorage.getItem('finalCartAmmount') || null,
-        adresses: [],
-        orders: []
     },  
     reducers: {
         authVerify: (state)=>{
             const token = localStorage.getItem('token') || null
             const user = JSON.parse(localStorage.getItem('user'))
             if(token && token.length >0){
-                state.isAuthenticated = true
-                state.user = user
+                state.user.isAuthenticated = true
+                state.user.items = user
             }
         },
-        userLogout :(state, action)=>{
+        userLogout :(state)=>{
             const token = localStorage.getItem('token')
             if(token){
-                state.isAuthenticated = false
-                state.token = null
-                state.user = {}
+                state.user.isAuthenticated = false
+                state.user.token = null
+                state.user.items = {}
                 toast.success("Logout")
                 localStorage.removeItem('token')
                 localStorage.removeItem('user')
@@ -110,72 +116,81 @@ const userSlice = createSlice({
     },
     extraReducers: (builder)=>{
         builder.addCase(userSigninThunk.pending, (state)=>{
-            state.logLoading = true
+            state.user.loading = true
         })
         .addCase(userSigninThunk.rejected, (state, action)=>{
             toast.error(action.payload)
-            state.logLoading(false)
+            state.user.loading = false
         })
         .addCase(userSigninThunk.fulfilled, (state, action)=>{
-            state.logLoading = false
-            state.isAuthenticated = true
-            state.user = action.payload.user
+            state.user.loading = false
+            state.user.isAuthenticated = true
+            state.user.items = action.payload.user
             localStorage.setItem('token', action.payload.token)
             localStorage.setItem('user', JSON.stringify(action.payload.user))
         })
         .addCase(userSignUpThunk.pending, (state)=>{
-            state.logLoading = true
+            state.user.loading = true
         })
         .addCase(userSignUpThunk.rejected, (state, action)=>{
             toast.error(action.payload.error)
-            state.logLoading = false
+            state.user.loading = false
         })
         .addCase(userSignUpThunk.fulfilled, (state, action)=>{
            toast.success(action.payload.message)
-           state.logLoading = false
+           state.user.loading = false
         })
         .addCase(getAddressThunk.pending, (state)=>{
-            state.addressLoading = true
+            state.address.addressLoading = true
         })
         .addCase(getAddressThunk.fulfilled, (state ,action)=>{
-            state.addressLoading = false
-            state.adresses = action.payload.address
+            state.address.addressLoading = false
+            state.address.items = action.payload.address
         })
-        .addCase(deleteAddressThunk.rejected, (action)=>{
+        .addCase(deleteAddressThunk.rejected, (state)=>{
+            state.address.addressLoading = false
         })
         .addCase(deleteAddressThunk.fulfilled, (state ,action)=>{
+            state.address.addressLoading = false
             toast.success(action.payload.message)
-            state.adresses = state.adresses.filter((item)=> item._id !==action.payload.address._id)
+            state.address.items = state.address.items.filter((item)=> item._id !==action.payload.address._id)
         })
-        .addCase(postAddressThunk.rejected, (action)=>{
+        .addCase(postAddressThunk.rejected, (state)=>{
+            state.address.addressLoading = false
         })
         .addCase(postAddressThunk.fulfilled, (state ,action)=>{
-            state.adresses = [...state.adresses, action.payload.address]
+            state.address.addressLoading = false
+            state.address.items = [...state.address.items, action.payload.address]
         })
         .addCase(orderThunk.rejected, (action)=>{
         })
+        .addCase(orderThunk.pending, (state)=>{
+            state.orders.loading = true
+        })
         .addCase(orderThunk.fulfilled, (state ,action)=>{
+            state.orders.loading = false
             state.carts = []
             state.finalCart= []
             localStorage.removeItem('carts')
             localStorage.removeItem('finalCartAmmount')
             // state.adresses = [...state.adresses, action.payload.address]
         })
-        .addCase(getOrdersThunk.pending, (state,action)=>{
-            state.orderLoading = true
+        .addCase(getOrdersThunk.pending, (state)=>{
+            state.orders.loading = true
         })
-        .addCase(getOrdersThunk.rejected, (state,action)=>{
-            state.orderLoading = false
+        .addCase(getOrdersThunk.rejected, (state)=>{
+            state.orders.loading = false
+            toast.error("Failed")
         })
         .addCase(getOrdersThunk.fulfilled, (state ,action)=>{
-            state.orderLoading = false
-            state.orders = action.payload.orders
+            state.orders.loading = false
+            state.orders.items = action.payload.orders
         })
         .addCase(cancelOrderThunk.rejected, (state, action)=>{
         })
         .addCase(cancelOrderThunk.fulfilled, (state, action)=>{
             toast.success(action.payload.message)
-            state.orders = state.orders.filter((item)=> item._id !== action.payload.order._id)
+            state.orders.items = state.orders.items.filter((item)=> item._id !== action.payload.order._id)
         })
     }
 })

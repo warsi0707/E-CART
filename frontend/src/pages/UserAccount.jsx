@@ -32,7 +32,7 @@ function UserAccount() {
   return (
     <div className="min-h-screen px-3 lg:w-[1100px] mx-auto">
       <div className="py-5">
-        <p className="text-2xl font-semibold">{userAuth?.user?.firstName.toUpperCase()} {userAuth?.user?.lastName.toUpperCase()}</p>
+        <p className="text-2xl font-semibold">{userAuth?.user?.firstName?.toUpperCase()} {userAuth?.user?.lastName?.toUpperCase()}</p>
         <p className="text-sm">{userAuth?.user?.email}</p>
       </div>
       <div className="w-full gap-3 md:mx-auto flex justify-center  md:grid md:grid-cols-10 ">

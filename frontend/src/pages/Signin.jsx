@@ -12,14 +12,13 @@ import {z} from "zod"
 export default function Signin(){
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const loading = useSelector(state => state.user.logLoading)
+    const loading = useSelector(state => state.user.user.loading)
 
     const [loginData, setLoginData] = useState({
         email: '',
         password: '',
     })
     const [error, setError] = useState({})
-
 
     const handleChange =async(e)=>{
         const {name, value} = e.target;

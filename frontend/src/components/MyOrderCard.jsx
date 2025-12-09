@@ -32,7 +32,7 @@ function MyOrderCard({order, onCancel}){
                 </div>
                 <div className="flex flex-col items-start ">
                     <p>{order?.status}</p>
-                    <p>{order?.address.city}, {order?.address.locality}, {order?.address.pin}</p>
+                    <p>{order?.address?.city}, {order?.address?.locality}, {order?.address?.pin}</p>
                 </div>
             </div>
             <div className="border-t border-gray-primary py-3 w-full grid sm:grid-cols-2 gap-3 ">

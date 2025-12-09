@@ -9,11 +9,12 @@ import CartItemPrices from "../components/CartItemPrices";
 function MakeOrder() {
   const navigate = useNavigate()
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user.user);
-  const addresses = useSelector((state) => state.user.adresses);
+  const user = useSelector((state) => state.user.user.items);
+  const address = useSelector((state) => state.user);
+  const addresses = useSelector((state) => state.user.address.items);
   const products = useSelector(state=> state.user.carts) 
   const totalAmount = useSelector(state => state.user.finalCart)
-  const [address, setAddress] = useState({});
+  const [addressInput, setAddressInput] = useState({});
   const [error, setError] = useState(false)
 
 
@@ -22,16 +23,16 @@ function MakeOrder() {
   }, []);
 
   const handleActive = useCallback((item) => {
-    setAddress(item);
+    setAddressInput(item);
     setError(false)
   }, []);
 
   const handlePlaceOrder =async ()=>{
-    if(Object.keys(address).length <=0){
+    if(Object.keys(addressInput).length <=0){
       setError(true)
       return
     }
-    const data =await dispatch(orderThunk({address, products,totalAmount}))
+    const data =await dispatch(orderThunk({address:addressInput, products,totalAmount}))
     setError(false)
     if(data.meta.requestStatus === "fulfilled"){
       navigate(`/placed-order/${data.payload.order._id}`)
@@ -65,7 +66,7 @@ function MakeOrder() {
               <p className="text-lg md:text-xl font-semibold">Shipping address</p>
               {error && <p className="text-red-400">Please select addrress</p>}
             </div>
-            {addresses.length <= 0 && (
+            {addresses?.length <= 0 && (
               <div className="mx-auto flex flex-col items-center py-5">
                 <p className="text-2xl">No address found</p>
                 <Link
@@ -76,13 +77,13 @@ function MakeOrder() {
                 </Link>
               </div>
             )}
-            {addresses.length > 0 &&
+            {addresses?.length > 0 &&
               addresses.map((item) => (
                 <OrderAddressCard
                   key={item._id}
                   item={item}
                   onSelect={() => handleActive(item)}
-                  active={address}
+                  active={addressInput}
                 />
               ))}
           </div>

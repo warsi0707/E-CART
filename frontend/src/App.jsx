@@ -14,9 +14,8 @@ const Signin = lazy(()=>import("./pages/Signin"))
 const AdminDashboard = lazy(()=>import("./admin/AdminDashboard"))
 const PlacedOrder = lazy(()=>import("./pages/PlacedOrder"))
 
-
 function App() {
-  const userAuth = useSelector(state => state.user)
+  const {isAuthenticated} = useSelector(state => state.user.user)
   return (
     <BrowserRouter>
      {/* <Suspense fallback={<Loading/>}> */}
@@ -26,9 +25,9 @@ function App() {
         <Route path="/product/:id" element={<ProductDetail/>}/>
         <Route path="/cart-items" element={<CarItems/>}/>
         <Route path="/order" element={<MakeOrder/>}/>
-        <Route path="/account" element={userAuth?.isAuthenticated? <UserAccount/>: <Signin/>}/>
+        <Route path="/account" element={isAuthenticated? <UserAccount/>: <Signin/>}/>
         <Route path="/signup" element={<Signup/>}/>
-        <Route path="/signin" element={userAuth?.isAuthenticated?<Home/>:<Signin/>}/>
+        <Route path="/signin" element={isAuthenticated?<Home/>:<Signin/>}/>
         <Route path="/admin-dashboard" element={<AdminDashboard/>}/>
         <Route path="/placed-order/:id" element={<PlacedOrder/>}/>
         

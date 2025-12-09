@@ -10,7 +10,7 @@ import { userSignUpThunk } from "../redux/thunks/userSignThunk";
 
 export default function Signup(){
     const dispatch = useDispatch()
-    const loading = useSelector(state => state.user.logLoading)
+    const loading = useSelector(state => state.user.user.loading)
     const navigate = useNavigate()
 
     const [userData, setUserdata] = useState({
