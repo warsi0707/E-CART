@@ -12,6 +12,7 @@ function MakeOrder() {
   const {items,loading} = useSelector((state) => state.user.user);
 
   const addresses = useSelector((state) => state.user.address.items);
+  console.log(addresses)
   const products = useSelector(state=> state.user.carts) 
   const totalAmount = useSelector(state => state.user.finalCart)
   const [addressInput, setAddressInput] = useState({});
@@ -78,7 +79,7 @@ function MakeOrder() {
                 </Link>
               </div>
             )}
-            {addresses.length > 0 &&
+            {
               addresses.map((item) => (
                 <OrderAddressCard
                   key={item._id}
