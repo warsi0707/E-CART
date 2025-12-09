@@ -80,7 +80,7 @@ function MakeOrder() {
               </div>
             )}
             {
-              addresses.map((item) => (
+              addresses?.map((item) => (
                 <OrderAddressCard
                   key={item._id}
                   item={item}
