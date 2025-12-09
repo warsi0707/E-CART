@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getAddressThunk, orderThunk } from "../redux/thunks/userSignThunk";
 import { Link, useNavigate } from "react-router";
 import CartItemPrices from "../components/CartItemPrices";
+import { authVerify } from "../redux/slices/userSlice";
 
 function MakeOrder() {
   const navigate = useNavigate()
@@ -12,16 +13,17 @@ function MakeOrder() {
   const {items,loading} = useSelector((state) => state.user.user);
 
   const addresses = useSelector((state) => state.user.address.items);
-  console.log(addresses)
   const products = useSelector(state=> state.user.carts) 
   const totalAmount = useSelector(state => state.user.finalCart)
   const [addressInput, setAddressInput] = useState({});
   const [error, setError] = useState(false)
 
-
+  useEffect(()=>{
+    dispatch(authVerify())
+  },[])
   useEffect(() => {
     dispatch(getAddressThunk());
-  }, []);
+  }, [dispatch]);
 
   const handleActive = useCallback((item) => {
     setAddressInput(item);
