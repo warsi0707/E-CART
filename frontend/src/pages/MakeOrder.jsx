@@ -9,8 +9,8 @@ import CartItemPrices from "../components/CartItemPrices";
 function MakeOrder() {
   const navigate = useNavigate()
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user.user.items);
-  const address = useSelector((state) => state.user);
+  const {items,loading} = useSelector((state) => state.user.user);
+
   const addresses = useSelector((state) => state.user.address.items);
   const products = useSelector(state=> state.user.carts) 
   const totalAmount = useSelector(state => state.user.finalCart)
@@ -50,16 +50,17 @@ function MakeOrder() {
             <p className="text-lg md:text-xl font-semibold">
               Contact information
             </p>
+            {loading ? <div>Loading...</div>:
             <div className="flex flex-col gap-3">
               <div className="flex flex-col  justify-between w-full gap-2">
                 <div className="flex gap-2 ">
-                  <p>{user?.firstName}</p>
-                  <p>{user?.lastName}</p>
+                  <p>{items?.firstName}</p>
+                  <p>{items?.lastName}</p>
                 </div>
-                <p>{user?.email}</p>
-                <p>+91 {user?.contact}</p>
+                <p>{items?.email}</p>
+                <p>+91 {items?.contact}</p>
               </div>
-            </div>
+            </div>}
           </div>
           <div className="h-full w-full flex flex-col gap-3 md:h-60 p-2">
             <div className="flex justify-between ">
@@ -77,7 +78,7 @@ function MakeOrder() {
                 </Link>
               </div>
             )}
-            {addresses?.length > 0 &&
+            {addresses.length > 0 &&
               addresses.map((item) => (
                 <OrderAddressCard
                   key={item._id}
