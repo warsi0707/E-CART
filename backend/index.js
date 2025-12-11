@@ -18,7 +18,7 @@ const __dirname = path.dirname(__filename);
 app.use(express.json())
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use(cors({
-    origin: [FRONTEND_URL,ADMIN_URL],
+    origin: [FRONTEND_URL,process.env.ADMIN_URL],
     methods: ["GET", "POST", "PATCH", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "category", "token"],
   credentials: true
