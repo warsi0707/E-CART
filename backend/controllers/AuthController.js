@@ -93,3 +93,61 @@ export const userVerify =async(req, res)=>{
     })
   }
 }
+export const forgetPassword =async(req,res)=>{
+  const {email, password, confirmPassword} = req.body;
+  try{
+    const user = await User.findOne({email})
+    if(!user){
+      return res.status(404).json({
+        error: "Not authorized to update password"
+      })
+    }
+    const hashPassword = await bcrypt.hash(password, 10)
+    await User.findByIdAndUpdate(user._id,{
+      password: hashPassword
+    })
+    return res.json({
+      message: 'Password updated successfully'
+    })
+  }catch(error){
+    return res.status(404).json({
+      error: error
+    })
+  }
+}
+export const updateName =async(req, res)=>{
+  const {firstName, lastName} = req.body;
+  try{
+    const user = await User.findByIdAndUpdate(req.params.id, {
+      firstName, 
+      lastName
+    },{new: true})
+    return res.json({
+      user: {
+        firstName: user.firstName,
+        lastName: user.lastName
+      }
+    })
+  }catch(error){
+    return res.status(404).json({
+      error: error
+    })
+  }
+}
+export const updateMobile =async(req, res)=>{
+  const {mobile} = req.body;
+  try{
+    const user = await User.findByIdAndUpdate(req.params.id, {
+      mobile
+    },{new: true})
+    return res.json({
+      mobile: {
+        mobile: user.mobile
+      }
+    })
+  }catch(error){
+    return res.status(404).json({
+      error: error
+    })
+  }
+}
