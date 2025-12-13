@@ -86,10 +86,11 @@ export const makeOrder = async (req, res) => {
 export const getOrders = async (req, res) => {
   try {
     // const orders = await Order.find({})
-    const orders = await Order.find({ user: req.user }).populate(
-      "address user items.product",
-      "city locality pin price title images quantity firstName lastName"
-    );
+    const orders = await Order.find({ user: req.user })
+      .populate(
+        "address user items.product",
+        "city locality pin price title images quantity firstName lastName"
+      );
     if (orders.length <= 0) {
       return res.json({
         orders: [],

@@ -7,6 +7,7 @@ import {useDispatch, useSelector} from "react-redux"
 import { userSigninThunk } from "../redux/thunks/userSignThunk";
 import { signinSchema } from "../utils/Schema";
 import {z} from "zod"
+import toast from "react-hot-toast";
 
 
 export default function Signin(){
@@ -32,8 +33,10 @@ export default function Signin(){
             setError(z.flattenError(error).fieldErrors)
             return;
         }
-        await dispatch(userSigninThunk({email:formData.email, password:formData.password})).unwrap()
-        navigate("/")
+        const data =await dispatch(userSigninThunk({email:formData.email, password:formData.password}))
+        if(data.type ===  "fetch/signin/fulfilled"){
+              navigate("/")
+        }      
     }
 
     return (

@@ -42,7 +42,7 @@ export default function Navbar() {
           {/* <NavLink title={'Saved'} icon={<FaRegHeart/>}/> */}
           <button onClick={()=>dispatch(toggleTheme())} className="text-2xl cursor-pointer">{isDark? <i className="fa-regular fa-sun"></i>:<i className="fa-regular fa-moon"></i>} </button>
           <NavLink title={'My cart'} links={"/cart-items"} icon={<i className="fa-solid fa-cart-shopping"></i>}/>
-          <NavLink title={'User'} links={ "/account" } icon={<i className="fa-solid fa-user"></i>}/>
+          <NavLink title={'User'} links={userAuth?.user?.isAuthenticated == true? "/account" : "/signin"} icon={<i className="fa-solid fa-user"></i>}/>
 
         </div>
         <div className="flex justify-center items-center sm:hidden">

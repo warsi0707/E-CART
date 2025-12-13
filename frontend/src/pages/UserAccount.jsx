@@ -9,7 +9,7 @@ const SellerOrders = lazy(()=> import("../components/seller/SellerOrders"))
 
 function UserAccount() {
   const dispatch = useDispatch()
-  const userAuth = useSelector(state => state.user)
+  const {user} = useSelector(state => state.user)
   const userMenu =[
     {
       icon: <i className="fa-solid fa-car-side"></i>,
@@ -32,8 +32,8 @@ function UserAccount() {
   return (
     <div className="min-h-screen px-3 lg:w-[1100px] mx-auto">
       <div className="py-5">
-        <p className="text-2xl font-semibold">{userAuth?.user?.firstName?.toUpperCase()} {userAuth?.user?.lastName?.toUpperCase()}</p>
-        <p className="text-sm">{userAuth?.user?.email}</p>
+        <p className="text-2xl font-semibold">{user?.items?.firstName?.toUpperCase()} {user?.items?.lastName?.toUpperCase()}</p>
+        <p className="text-sm">{user?.items?.email}</p>
       </div>
       <div className="w-full gap-3 md:mx-auto flex justify-center  md:grid md:grid-cols-10 ">
         <div className="min-h-screen w-10 md:w-full lg:col-span-3 flex items-start flex-col gap-10">
@@ -44,7 +44,7 @@ function UserAccount() {
                     <p className="text-sm hidden lg:flex">{menu.title}</p>
                     </button>
                 ))}
-                {userAuth?.user?.role === "SELLER" &&
+                {user?.items?.role === "SELLER" &&
                 <>
                  <button  onClick={()=> setActivemenu("Seller")} className={`${activeMenu ==="Seller"?"bg-purple-secondry border": "bg-white"} hover:bg-gray-primary flex gap-2 items-center justify-center md:justify-start w-full p-1 lg:p-2 cursor-pointer rounded-sm  text-xl border-gray-300  text-purple-primary`}>
                   <p className="text-purple-primary bg-white p-1 rounded-md"><i className="fa-solid fa-user"></i></p>

@@ -119,7 +119,6 @@ const userSlice = createSlice({
             state.user.loading = true
         })
         .addCase(userSigninThunk.rejected, (state, action)=>{
-            toast.error(action.payload)
             state.user.loading = false
         })
         .addCase(userSigninThunk.fulfilled, (state, action)=>{

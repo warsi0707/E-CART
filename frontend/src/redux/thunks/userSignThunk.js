@@ -12,11 +12,11 @@ export const userSigninThunk = createAsyncThunk('fetch/signin', async({email, pa
             body: JSON.stringify({email, password, confirmPassword})
         })
        const result = await response.json()
-        if(response.status ==200){
+        if(response.status ===200){
              toast.success(result.message)
              return result
         }else{
-            toast.error(result.error)
+            toast.error(result.message)
             return rejectWithValue(result.errors)
         }
     }catch(error){
