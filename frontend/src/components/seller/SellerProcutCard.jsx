@@ -11,7 +11,7 @@ function SellerProcutCard({product, onDelete}){
         <div className="w-full p-2 border border-gray-300 shadow-md rounded-md flex items-center justify-between">
            <img src={`${BackendUrl}/${product.images[0]}`} className="h-16 w-20 rounded-md" alt="" />
            <div>
-                <Link to={"#"} className="text-purple-primary hover:underline font-semibold">{product?.title}</Link>
+                <Link to={`/product/${product._id}`} className="text-purple-primary hover:underline font-semibold">{product?.title}</Link>
                 <p className="text-sm">{product?.category}</p>
            </div>
            <StatusCard status={product.status}/>
@@ -21,9 +21,9 @@ function SellerProcutCard({product, onDelete}){
                 <p>{product.price}</p>
            </div>
            <div className="flex items-center gap-2">
-            <Link to={""} title="Details" className=" text-md">
+            {/* <Link to={""} title="Details" className=" text-md">
                 <p className="border p-2 rounded-md border-gray-400"><i className="fa-solid fa-up-right-from-square"></i></p>
-            </Link>
+            </Link> */}
              <button onClick={()=> setIsUpdating(true)} title="Edit" className=" text-md cursor-pointer">
                 <p className="border p-2 rounded-md border-gray-400"><i className="fa-solid fa-pen"></i></p>
             </button>

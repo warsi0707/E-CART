@@ -4,7 +4,7 @@ import { useCallback, useEffect } from "react";
 import { sellerCancelOrdersThunk, sellerOrdersThunk } from "../../redux/thunks/sellerThunk";
 
 export default function SellerOrders(){
-    const orders = useSelector(state => state.seller.orders)
+    const {orders, ordersLoading} = useSelector(state => state.seller.orders)
     const dispatch = useDispatch()
 
     useEffect(()=>{

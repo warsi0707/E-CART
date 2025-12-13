@@ -1,5 +1,6 @@
 import { lazy, memo, useState } from "react";
 import { BackendUrl } from "../../utils/Backendurl";
+import { Link } from "react-router";
 const UpdateStatusPage = lazy(()=> import("./UpdateStatusPage"))
 
 function SellerOrderCard({order, handleCancel}){
@@ -46,7 +47,7 @@ function SellerOrderCard({order, handleCancel}){
                             <div key={item._id} className="flex items-center gap-5">
                                 <img src={`${BackendUrl}/${item?.product?.images[0]}`} className="h-20 w-20 rounded-md" alt="" />
                                 <div>
-                                    <p className="">{item?.product.title}</p>
+                                <Link to={`/product/${item._id}`} className="text-purple-primary hover:underline">{item?.product.title}</Link>
                                     <p className="text-sm">Quantity: {item.quantity}</p>
                                     <p className="text-sm">Price: {item.price}</p>
                                 </div>

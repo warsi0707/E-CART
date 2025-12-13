@@ -30,6 +30,8 @@ export const getSellerProductThunk = createAsyncThunk('fetch/getSellerProducts',
         const result = await response.json()
         if(response.status ==200){
             return result
+        }else{
+            return rejectWithValue(result)
         }
     }catch(error){
         return rejectWithValue(error)

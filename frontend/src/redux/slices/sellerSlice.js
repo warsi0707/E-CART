@@ -1,99 +1,113 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { filterProductThunk, getSellerProductThunk, postProductThunk, removeProductThunk, sellerCancelOrdersThunk, sellerOrdersStatusThunk, sellerOrdersThunk, updateStatusThunk } from "../thunks/sellerThunk";
+import toast from "react-hot-toast";
 
 const sellerSlice = createSlice({
     name: 'seller',
     initialState: {
-        products :[],
-        loading: false,
-        orders: []
+        products :{
+            products: [],
+            productLoading: false
+        },
+        orders: {
+            orders: [],
+            ordersLoading: false
+        },
+        // loading: false
     },
     reducers: {},
     extraReducers: (builder)=>{
         builder.addCase(postProductThunk.pending, (state)=>{
-            state.loading = true
+            state.products.productLoading = true
         })
         .addCase(postProductThunk.rejected, (state, action)=>{
-            state.loading = false
+            state.products.productLoading = false
         })
         .addCase(postProductThunk.fulfilled, (state, action)=>{
-            state.loading = false
-            state.products = [...state.products, action.payload.product]
+            state.products.productLoading = false
+            state.products.products = [...state.products.products, action.payload.product]
         })
+        //Get sellers product
         .addCase(getSellerProductThunk.pending, (state)=>{
-            state.loading = true
+            state.products.productLoading = true
         })
         .addCase(getSellerProductThunk.rejected, (state)=>{
-            state.loading = false
+           state.products.productLoading = false
+           toast.error("Failed to fetch products")
         })
         .addCase(getSellerProductThunk.fulfilled, (state,action)=>{
-            state.loading = false
-            state.products = action.payload
+            state.products.productLoading = false
+            state.products.products =action.payload
         })
+        //Remove seller products
         .addCase(removeProductThunk.pending, (state)=>{
-            state.loading = true
+            state.products.productLoading = true
         })
         .addCase(removeProductThunk.rejected, (state)=>{
-            state.loading = false
+           state.products.productLoading = false
         })
         .addCase(removeProductThunk.fulfilled, (state,action)=>{
-            state.loading = false
-            state.products = state.products.filter((product)=> product._id !== action.payload.product._id)
+           state.products.productLoading = false
+            state.products.products = state.products.products.filter((product)=> product._id !== action.payload.product._id)
         })
+        //Update status
         .addCase(updateStatusThunk.pending, (state)=>{
-            state.loading = true
+           state.products.productLoading = true
         })
         .addCase(updateStatusThunk.rejected, (state)=>{
-            state.loading = false
+            state.products.productLoading = false
+           toast.error("failed")
         })
         .addCase(updateStatusThunk.fulfilled, (state,action)=>{
-            state.loading = false
-            state.products.find((product)=> {
-                if(product._id === action.payload.product._id){
-                    product.status = action.payload.product.status 
-                }
-            })
+           state.products.productLoading = false
+            state.products.products.map((product)=> 
+                product._id === action.payload.product._id?
+                    {...product.status = action.payload.product.status }
+                : product
+            )
         })
+        //Filter products
         .addCase(filterProductThunk.rejected, (state,action)=>{
-            state.loading = false
+             state.products.productLoading = false
+           toast.error("failed")
         })
         .addCase(filterProductThunk.fulfilled, (state,action)=>{
-            state.loading = false
-            state.products = action.payload.products
+            state.products.productLoading = false
+            state.products.products = action.payload.products
         })
         .addCase(sellerOrdersThunk.pending, (state)=>{
-            state.loading = true  
+            state.orders.ordersLoading = true  
         })
         .addCase(sellerOrdersThunk.rejected, (state)=>{
-            state.loading = false  
+            state.orders.ordersLoading = false   
         })
         .addCase(sellerOrdersThunk.fulfilled, (state,action)=>{
-            state.loading = false  
-            state.orders = action.payload.orders
+            state.orders.ordersLoading = false
+            state.orders.orders = action.payload.orders
         })
         .addCase(sellerOrdersStatusThunk.pending, (state)=>{
-            state.loading = true
+            state.orders.ordersLoading = true  
         })
         .addCase(sellerOrdersStatusThunk.rejected, (state)=>{
-            state.loading = false
+            state.orders.ordersLoading = false  
         })
         .addCase(sellerOrdersStatusThunk.fulfilled, (state,action)=>{
-            state.loading = false
-            state.orders.find((item)=> {
+            state.orders.ordersLoading = false  
+            state.orders.orders.find((item)=> {
                 if(item._id === action.payload.order._id){
                     item.status = action.payload.order.status
                 }
             })
         })
         .addCase(sellerCancelOrdersThunk.pending, (state)=>{
-            state.loading = true
+           state.orders.ordersLoading = true  
         })
         .addCase(sellerCancelOrdersThunk.rejected, (state)=>{
-            state.loading = false
+            state.orders.ordersLoading = false  
         })
         .addCase(sellerCancelOrdersThunk.fulfilled, (state,action)=>{
-            state.loading = false
-            state.orders = state.orders.filter((item)=> item._id !== action.payload._id)
+           state.orders.ordersLoading = false  
+            state.orders.orders = state.orders.orders.filter((item)=> item._id !== action.payload._id)
         })
     }
 })

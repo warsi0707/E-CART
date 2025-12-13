@@ -1,4 +1,4 @@
-import { lazy, memo, useEffect, useState } from "react";
+import { lazy, memo, useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { filterProductThunk, getSellerProductThunk, removeProductThunk} from "../redux/thunks/sellerThunk";
 const PostProduct = lazy(()=> import("../components/seller/PostProduct"))
@@ -8,18 +8,18 @@ function SellerProduct(){
     const dispatch = useDispatch()
     const [isPosting, setIsPosting] = useState(false)
     const [category, setCategory] = useState("")
-    const products = useSelector(state=> state.seller.products)
+    const {products, productLoading} = useSelector(state=> state.seller.products)
 
-    const handleDeleteProduct =(id)=>{
+    const handleDeleteProduct =useCallback((id)=>{
         dispatch(removeProductThunk(id))
-    }
+    },[])
     useEffect(()=>{
         dispatch(filterProductThunk(category))
     },[category])
+
     useEffect(()=>{
         dispatch(getSellerProductThunk())
-        
-    },[dispatch])
+    },[])
     return (
         <>
         <div className="border  w-full min-h-screen rounded-md border-gray-primary space-y-5 p-2">
@@ -45,6 +45,7 @@ function SellerProduct(){
                     <p>Price</p>
                     <p>Actions</p>
                 </div>
+                {productLoading && <p>Loading...</p>}
                 <div className="flex flex-col gap-2">
                     {products.length <=0 && <p className="text-2xl text-center pt-10">No products</p>}
                     {products && products.map((product)=>(
