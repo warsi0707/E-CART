@@ -1,4 +1,4 @@
-import { lazy, useEffect } from "react";
+import { lazy, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductsThunks } from "../redux/thunks/productsThunk";
 import HomeSkeleton from "../components/skeleton/HomeSkeleton";
@@ -7,6 +7,7 @@ const CategoryCard = lazy(() => import("../components/CategoryCard"));
 const ProductCard = lazy(() => import("../components/ProductCard"));
 
 export default function Home() {
+  
   const items = [
     "Electronics",
     "Fashion",

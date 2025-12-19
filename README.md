@@ -3,7 +3,7 @@
 A full-stack, role-based e-commerce platform built using Node.js, Express, MongoDB, React.js, Redux Toolkit, Tailwind CSS, JWT, Multer, and Zod. The system supports three roles—User, Seller, and Admin—each with dedicated access and functionality.
 
 ## 🌐 Live Demo
-🔗 [View Live Project](https://e-cart-frotend-app.onrender.com)
+🔗 [View Live Project](https://e-cart-frontend-nmaj.onrender.com)
 
 ---
 
