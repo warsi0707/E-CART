@@ -6,7 +6,7 @@ const authRouter = express.Router()
 authRouter.post("/signup", userSignUp)
 .post("/signin", userSignin)
 .get('/verify', AuthChecker,userVerify)
-.patch("/forget-password", AuthChecker, forgetPassword)
+.patch("/forget-password", forgetPassword)
 .patch("/update-name/:id", AuthChecker, updateName)
 .patch("/update-mobile/:id", AuthChecker, updateMobile)
 

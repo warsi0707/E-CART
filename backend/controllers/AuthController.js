@@ -2,7 +2,8 @@ import bcrypt from"bcrypt"
 import  jwt from 'jsonwebtoken'
 import { USER_JWT_SECRET } from "../config/Config.js";
 import User from "../models/UserModel.js"
-
+import { z } from 'zod'
+import { updatePasswordSchema } from "../utils/Schema.js";
 
 
 
@@ -97,10 +98,22 @@ export const userVerify =async(req, res)=>{
 export const forgetPassword =async(req,res)=>{
   const {email, password, confirmPassword} = req.body;
   try{
+    const {error, success} = updatePasswordSchema.safeParse(req.body)
+    if(!success){
+      const fieldErrors = z.flattenError(error).fieldErrors
+      return res.status(401).json({
+        error: fieldErrors
+      })
+    }
     const user = await User.findOne({email})
     if(!user){
       return res.status(404).json({
         error: "Not authorized to update password"
+      })
+    }
+    if(password !== confirmPassword){
+      return res.status(501).json({
+        error: "Password not matched"
       })
     }
     const hashPassword = await bcrypt.hash(password, 10)
@@ -108,7 +121,7 @@ export const forgetPassword =async(req,res)=>{
       password: hashPassword
     })
     return res.json({
-      message: 'Password updated successfully'
+      message: 'Password updated successfully',
     })
   }catch(error){
     return res.status(404).json({

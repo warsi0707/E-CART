@@ -11,3 +11,9 @@ export const signinSchema = z.object({
     email: z.email("Please enter a valid email"),
     password: z.string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=.*\d).{8,}$/, "Enter at least 8 char, with uppercase, lowercase and a number"),
 })
+
+export const updatePasswordSchema = z.object({
+    email: z.email("Please enter a valid email"),
+    password: z.string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=.*\d).{8,}$/, "Enter at least 8 char, with uppercase, lowercase and a number"),
+    confirmPassword: z.string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=.*\d).{8,}$/, "Enter at least 8 char, with uppercase, lowercase and a number"),
+})
