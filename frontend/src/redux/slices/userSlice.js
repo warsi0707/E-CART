@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit"
-import { cancelOrderThunk, deleteAddressThunk, getAddressThunk, getOrdersThunk, orderThunk, postAddressThunk, userSigninThunk, userSignUpThunk } from "../thunks/userSignThunk"
+import { cancelOrderThunk, deleteAddressThunk, getAddressThunk, getOrdersThunk, orderThunk, postAddressThunk, updatePasswordThunk, userSigninThunk, userSignUpThunk } from "../thunks/userSignThunk"
 import toast from "react-hot-toast"
 
 
@@ -190,6 +190,17 @@ const userSlice = createSlice({
         .addCase(cancelOrderThunk.fulfilled, (state, action)=>{
             toast.success(action.payload.message)
             state.orders.items = state.orders.items.filter((item)=> item._id !== action.payload.order._id)
+        })
+        .addCase(updatePasswordThunk.pending, (state)=> {
+            state.user.loading = true
+        })
+        .addCase(updatePasswordThunk.rejected, (state,action)=> {
+            state.user.loading = false
+            toast.error(action.payload.error)
+        })
+        .addCase(updatePasswordThunk.fulfilled, (state, action)=> {
+            state.user.loading = false
+            toast.success(action.payload.message)
         })
     }
 })

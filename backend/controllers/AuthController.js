@@ -108,7 +108,7 @@ export const forgetPassword =async(req,res)=>{
     const user = await User.findOne({email})
     if(!user){
       return res.status(404).json({
-        error: "Not authorized to update password"
+        error: "Email not found, please signup"
       })
     }
     if(password !== confirmPassword){

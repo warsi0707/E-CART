@@ -2,6 +2,7 @@ import {BrowserRouter, Routes, Route} from "react-router"
 import { lazy, Suspense } from "react"
 import { useSelector } from "react-redux"
 import Loading from "./components/skeleton/Loading"
+import ForgotPassword from "./pages/ForgotPassword"
 
 const Footer = lazy(()=>import("./pages/Footer"))
 const Home = lazy(()=>import("./pages/Home"))
@@ -31,6 +32,7 @@ function App() {
         <Route path="/signin" element={isAuthenticated?<Home/>:<Signin/>}/>
         <Route path="/admin-dashboard" element={<AdminDashboard/>}/>
         <Route path="/placed-order/:id" element={<PlacedOrder/>}/>
+        <Route path="/forget-password" element={<ForgotPassword/>}/>
         
       </Routes>
       <Footer/>

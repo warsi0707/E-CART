@@ -157,3 +157,22 @@ export const cancelOrderThunk = createAsyncThunk('fetch/cancelOrders', async(id,
         return rejectWithValue(error)
     }
 })
+export const updatePasswordThunk = createAsyncThunk("fetch/updatePassword", async(paylod, {rejectWithValue})=>{
+    try{
+        const response = await fetch(`${BackendUrl}/api/v1/auth/forget-password`, {
+            method: 'PATCH',
+            headers: {
+                "Content-Type": 'application/json'
+            },
+            body: JSON.stringify(paylod)
+        })
+        const result = await response.json()
+        if(response.status === 200){
+            return result
+        }else {
+            return rejectWithValue(result)
+        }
+    }catch(error){
+        return rejectWithValue(error)
+    }
+})

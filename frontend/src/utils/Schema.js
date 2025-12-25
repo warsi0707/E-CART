@@ -25,3 +25,8 @@ export const addressSchema = z.object({
     country: z.string().min(1, "Country required").max(200),
     pin: z.string().min(1, "pin required").max(500),
 })
+export const updatePasswordSchema = z.object({
+    email: z.email("Please enter a valid email"),
+    password: z.string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=.*\d).{8,}$/, "Enter at least 8 char, with uppercase, lowercase and a number"),
+    confirmPassword: z.string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=.*\d).{8,}$/, "Enter at least 8 char, with uppercase, lowercase and a number"),
+})
