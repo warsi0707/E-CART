@@ -2,7 +2,6 @@ import {BrowserRouter, Routes, Route} from "react-router"
 import { lazy, Suspense } from "react"
 import { useSelector } from "react-redux"
 import Loading from "./components/skeleton/Loading"
-import ForgotPassword from "./pages/ForgotPassword"
 
 const Footer = lazy(()=>import("./pages/Footer"))
 const Home = lazy(()=>import("./pages/Home"))
@@ -15,6 +14,7 @@ const Signup = lazy(()=>import("./pages/Signup"))
 const Signin = lazy(()=>import("./pages/Signin"))
 const AdminDashboard = lazy(()=>import("./admin/AdminDashboard"))
 const PlacedOrder = lazy(()=>import("./pages/PlacedOrder"))
+const ForgotPassword = lazy(()=>import("./pages/ForgotPassword"))
 
 function App() {
   const {isAuthenticated} = useSelector(state => state.user.user)

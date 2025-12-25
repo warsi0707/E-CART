@@ -48,10 +48,12 @@ export default function Signin(){
                 <FormInput value={loginData.email} handleChange={handleChange} name={'email'} error={error.email} lable={"Email"} type={'email'}/>
                 <PasswordInput value={loginData.password} handleChange={handleChange} error={error.password} label={"Password"} name={'password'} lable={"Password"} />
                 {/* <PasswordInput value={loginData.confirmPassword} handleChange={handleChange} error={error.confirmPassword} label={"Confirm password"} name={'confirmPassword'} lable={"Confirm password"} /> */}
-                <div className="flex items-center text-sm">
+                <div className="flex gap-3 items-center text-sm">
                     <p>Have already an account? </p>
                     <Link to={"/signup"} className="underline text-purple-primary">Register</Link>
+                    <Link to={"/forget-password"} className="underline text-purple-primary">Forgot password</Link>
                 </div>
+                
                 <SignButton handleClick={()=>handleSignin(loginData)} title={loading? "Loading...": "Signin"}/>
             </div>
         </div>
