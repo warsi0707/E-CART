@@ -6,6 +6,7 @@ import { getAddressThunk, orderThunk } from "../redux/thunks/userSignThunk";
 import { Link, useNavigate } from "react-router";
 import CartItemPrices from "../components/CartItemPrices";
 import { authVerify } from "../redux/slices/userSlice";
+import PostAddressPage from "../components/addresses/PostAddressPage";
 
 function MakeOrder() {
   const navigate = useNavigate()
@@ -17,6 +18,7 @@ function MakeOrder() {
   const totalAmount = useSelector(state => state.user.finalCart)
   const [addressInput, setAddressInput] = useState({});
   const [error, setError] = useState(false)
+  const [isAddAddress, setIsAddAddress] = useState(false)
 
   useEffect(()=>{
     dispatch(authVerify())
@@ -43,6 +45,7 @@ function MakeOrder() {
     
   }
   return (
+    <>
     <div className="w-full p-2 md:w-[900px] mx-auto">
       <div className="mt-2">
         <BackButton onBack={()=> history.back()}/>
@@ -73,12 +76,7 @@ function MakeOrder() {
             {addresses?.length <= 0 && (
               <div className="mx-auto flex flex-col items-center py-5">
                 <p className="text-2xl">No address found</p>
-                <Link
-                  to={"/account"}
-                  className="text-purple-primary hover:underline"
-                >
-                  Add new address
-                </Link>
+                <button onClick={()=> setIsAddAddress(true)} className="text-purple-primary cursor-pointer">Add new address</button>
               </div>
             )}
             {
@@ -97,6 +95,8 @@ function MakeOrder() {
         </div>
       </div>
     </div>
+    {isAddAddress && <PostAddressPage onClose={()=> setIsAddAddress(false)}/>}
+    </>
   );
 }
 export default memo(MakeOrder);

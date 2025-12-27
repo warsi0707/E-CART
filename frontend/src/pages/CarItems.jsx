@@ -5,16 +5,22 @@ const CartItemPrices = lazy(() => import("../components/CartItemPrices"));
 import { useDispatch, useSelector } from "react-redux";
 import { getCart, removeCartItem } from "../redux/slices/userSlice";
 import { Link, useNavigate } from "react-router";
+import toast from "react-hot-toast";
 
 export default function CarItems() {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.user.carts);
+  const {isAuthenticated} = useSelector(state=> state.user.user)
   const navigate = useNavigate();
 
   const handleRemoveItem = (id) => {
     dispatch(removeCartItem(id));
   };
   const handleMakeOrder = () => {
+    if(isAuthenticated !== true){
+      toast.error("Please login to order")
+      return;
+    }
     navigate("/order");
   };
   useEffect(() => {
@@ -26,7 +32,7 @@ export default function CarItems() {
         <div className="flex items-center gap-3 ">
           <BackButton onBack={() => window.history.back()} />
           <h1 className="md:text-xl font-bold">Your basket:</h1>
-          <p>{cartItems?.length} items</p>
+          <p>{cartItems?.length } items</p>
         </div>
         <div className="w-full min-h-screen flex flex-col  justify-center items-center pb-40">
           <p className="text-xl md:text-3xl">No cart items found</p>
@@ -55,7 +61,7 @@ export default function CarItems() {
                 />
               ))}
           </div>
-          {cartItems?.length >= 0 && (
+          {cartItems?.length > 0 && (
             <div className=" w-full  col-span-3 flex flex-col gap-3    rounded-md text-sm">
               <CartItemPrices title={"Make order"} onNext={handleMakeOrder} />
             </div>
