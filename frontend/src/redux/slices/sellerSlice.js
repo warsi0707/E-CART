@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { filterProductThunk, getSellerProductThunk, postProductThunk, removeProductThunk, sellerCancelOrdersThunk, sellerOrdersStatusThunk, sellerOrdersThunk, updateStatusThunk } from "../thunks/sellerThunk";
+import { filterProductThunk, getSellerOrderByIdThunk, getSellerProductThunk, postProductThunk, removeProductThunk, sellerCancelOrdersThunk, sellerOrdersStatusThunk, sellerOrdersThunk, updateStatusThunk } from "../thunks/sellerThunk";
 import toast from "react-hot-toast";
 
 const sellerSlice = createSlice({
@@ -108,6 +108,16 @@ const sellerSlice = createSlice({
         .addCase(sellerCancelOrdersThunk.fulfilled, (state,action)=>{
            state.orders.ordersLoading = false  
             state.orders.orders = state.orders.orders.filter((item)=> item._id !== action.payload._id)
+        })
+        .addCase(getSellerOrderByIdThunk.pending, (state)=>{
+            state.orders.ordersLoading = true
+        })
+        .addCase(getSellerOrderByIdThunk.rejected, (state)=>{
+            state.orders.ordersLoading = false
+        })
+        .addCase(getSellerOrderByIdThunk.fulfilled, (state, action)=>{
+            state.orders.ordersLoading = false
+            // state.orders.orders = action.payload.order
         })
     }
 })

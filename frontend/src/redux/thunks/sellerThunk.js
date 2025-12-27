@@ -137,3 +137,18 @@ export const sellerCancelOrdersThunk = createAsyncThunk('fetch/sellerCancelOrder
         return rejectWithValue(error)
     }
 })
+export const getSellerOrderByIdThunk = createAsyncThunk('fetch/sellerOrderById', async(orderId, {rejectWithValue})=>{
+    try{
+        const response = await fetch(`${BackendUrl}/api/v1/seller/order/${orderId}`,{
+            headers: {
+                token: localStorage.getItem('token'),
+            }
+        })
+        const result = await response.json()
+        if(response.status ==200){
+            return result
+        }
+    }catch(error){
+        return rejectWithValue(error)
+    }
+})

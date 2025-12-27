@@ -1,6 +1,7 @@
 import { lazy, memo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { userLogout } from "../redux/slices/userSlice";
+import LoginAndSecurity from "./LoginAndSecurity";
 const SellerProduct = lazy(()=> import("./SellerProduct"))
 const UserAddress = lazy(()=> import("./UserAddressPage"))
 const MyOrderPage = lazy(()=> import("./MyOrderPage"))
@@ -36,7 +37,7 @@ function UserAccount() {
         <p className="text-sm">{user?.items?.email}</p>
       </div>
       <div className="w-full gap-3 md:mx-auto flex justify-center  md:grid md:grid-cols-10 ">
-        <div className="min-h-screen w-10 md:w-full lg:col-span-3 flex items-start flex-col gap-10">
+        <div className="min-h-screen w-10 md:w-full lg:col-span-3 flex items-start flex-col gap-10 border-r border-gray-primary">
             <div className="w-full flex flex-col gap-2">
                 {userMenu.map((menu, indx) => (
                     <button key={indx} onClick={()=> setActivemenu(menu.title)} className={`${menu.title ===activeMenu? "bg-purple-secondry border": "bg-white"} hover:bg-gray-primary flex gap-2 items-center justify-center md:justify-start w-full p-1 lg:p-2 cursor-pointer rounded-sm  text-xl border-gray-300  text-purple-primary`}>
@@ -69,6 +70,7 @@ function UserAccount() {
             {activeMenu === "My Addresses" && <UserAddress/>}
             {activeMenu === "Seller" && <SellerProduct/>}
             {activeMenu === "Seller-orders" && <SellerOrders/>}
+            {activeMenu === "Login & Security" && <LoginAndSecurity/>}
         </div>
       </div>
     </div>

@@ -30,3 +30,9 @@ export const updatePasswordSchema = z.object({
     password: z.string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=.*\d).{8,}$/, "Enter at least 8 char, with uppercase, lowercase and a number"),
     confirmPassword: z.string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=.*\d).{8,}$/, "Enter at least 8 char, with uppercase, lowercase and a number"),
 })
+export const emailUpdateSchema = z.object({
+     email: z.email("Please enter a valid email")
+})
+export const conteactUpdateSchema = z.object({
+     contact: z.string("Contact required").min(10, "Provide valid phone number").max(13, "Wrong number")
+})

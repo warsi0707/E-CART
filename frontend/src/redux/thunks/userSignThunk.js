@@ -176,3 +176,67 @@ export const updatePasswordThunk = createAsyncThunk("fetch/updatePassword", asyn
         return rejectWithValue(error)
     }
 })
+export const updateUsernameThunk= createAsyncThunk("fetch/updateUsername", async(paylod, {rejectWithValue})=>{
+    try{
+        const firstName = paylod.firstName;
+        const lastName = paylod.lastName
+        const response = await fetch(`${BackendUrl}/api/v1/auth/update-name`, {
+            method: 'PATCH',
+            headers: {
+                token: localStorage.getItem('token'),
+                "Content-Type": 'application/json'
+            },
+            body: JSON.stringify({firstName, lastName})
+        })
+        const result = await response.json()
+        if(response.status === 200){
+            return result
+        }else {
+            return rejectWithValue(result)
+        }
+    }catch(error){
+        return rejectWithValue(error)
+    }
+})
+export const updateMobileThunk= createAsyncThunk("fetch/updateMobile", async(paylod, {rejectWithValue})=>{
+    try{
+        const mobile = paylod
+        const response = await fetch(`${BackendUrl}/api/v1/auth/update-mobile`, {
+            method: 'PATCH',
+            headers: {
+                token: localStorage.getItem('token'),
+                "Content-Type": 'application/json'
+            },
+            body: JSON.stringify({mobile})
+        })
+        const result = await response.json()
+        if(response.status === 200){
+            return result
+        }else {
+            return rejectWithValue(result)
+        }
+    }catch(error){
+        return rejectWithValue(error)
+    }
+})
+export const updateEmailThunk= createAsyncThunk("fetch/updateEmail", async(paylod, {rejectWithValue})=>{
+    try{
+        const email = paylod
+        const response = await fetch(`${BackendUrl}/api/v1/auth/update-email`, {
+            method: 'PATCH',
+            headers: {
+                token: localStorage.getItem('token'),
+                "Content-Type": 'application/json'
+            },
+            body: JSON.stringify({email})
+        })
+        const result = await response.json()
+        if(response.status === 200){
+            return result
+        }else {
+            return rejectWithValue(paylod)
+        }
+    }catch(error){
+        return rejectWithValue(error)
+    }
+})

@@ -1,6 +1,7 @@
-import { lazy, memo, useCallback, useEffect, useState } from "react";
+import { lazy, memo, Suspense, useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { filterProductThunk, getSellerProductThunk, removeProductThunk} from "../redux/thunks/sellerThunk";
+import SellerProductSkeleton from "../components/skeleton/SellerProductSkeleton";
 const PostProduct = lazy(()=> import("../components/seller/PostProduct"))
 const SellerProcutCard = lazy(()=> import("../components/seller/SellerProcutCard"))
 
@@ -12,7 +13,7 @@ function SellerProduct(){
 
     const handleDeleteProduct =useCallback((id)=>{
         dispatch(removeProductThunk(id))
-    },[])
+    },[dispatch])
     useEffect(()=>{
         dispatch(filterProductThunk(category))
     },[category])
@@ -45,12 +46,14 @@ function SellerProduct(){
                     <p>Price</p>
                     <p>Actions</p>
                 </div>
-                {productLoading && <p>Loading...</p>}
+               
                 <div className="flex flex-col gap-2">
                     {products.length <=0 && <p className="text-2xl text-center pt-10">No products</p>}
+                    <Suspense fallback={<SellerProductSkeleton/>}>
                     {products && products.map((product)=>(
                         <SellerProcutCard key={product._id} product={product}  onDelete={()=> handleDeleteProduct(product._id)}/>
                     ))}
+                    </Suspense>
                 </div>
             </div>
         </div>

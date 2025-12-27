@@ -50,7 +50,6 @@ export const userSignin = async (req, res) => {
     const user = await User.findOne({
       email: email,
     });
-    console.log(user)
     if (!user) {
       return res.status(501).json({
         error: "User Not Found",
@@ -132,11 +131,12 @@ export const forgetPassword =async(req,res)=>{
 export const updateName =async(req, res)=>{
   const {firstName, lastName} = req.body;
   try{
-    const user = await User.findByIdAndUpdate(req.params.id, {
+    const user = await User.findByIdAndUpdate(req.user, {
       firstName, 
       lastName
     },{new: true})
     return res.json({
+      message: "User name updated successfull",
       user: {
         firstName: user.firstName,
         lastName: user.lastName
@@ -151,13 +151,28 @@ export const updateName =async(req, res)=>{
 export const updateMobile =async(req, res)=>{
   const {mobile} = req.body;
   try{
-    const user = await User.findByIdAndUpdate(req.params.id, {
+    const user = await User.findByIdAndUpdate(req.user, {
       mobile
     },{new: true})
     return res.json({
-      mobile: {
-        mobile: user.mobile
-      }
+      message: "Contact updated",
+      mobile: user.mobile
+    })
+  }catch(error){
+    return res.status(404).json({
+      error: error
+    })
+  }
+}
+export const updateEmail =async(req, res)=>{
+  const {email} = req.body;
+  try{
+    const user = await User.findByIdAndUpdate(req.user, {
+      email
+    },{new: true})
+    return res.json({
+      message: "Email updated",
+       email: user.email
     })
   }catch(error){
     return res.status(404).json({

@@ -1,7 +1,8 @@
 import { lazy, memo, useState } from "react";
 import { BackendUrl } from "../../utils/Backendurl";
 import { Link } from "react-router";
-const UpdateStatusPage = lazy(()=> import("./UpdateStatusPage"))
+
+import UpdateStatusPage from "./UpdateStatusPage"
 
 function SellerOrderCard({order, handleCancel}){
     const [isUpdating, setIsUpdating] = useState(false)
@@ -18,7 +19,7 @@ function SellerOrderCard({order, handleCancel}){
                                 <p className="text-lg">Order:</p> 
                                 <p className="text-lg">#{order?._id}</p>
                             </div>
-                            <p className="text-xs md:text-sm text-slate-primary">{order?.items.length} Products | By {order?.user.firstName}{order?.user.lastName} | {date}, {time}</p>
+                            <p className="text-xs md:text-sm text-slate-primary">{order?.items?.length} Products | By {order?.user.firstName}{order?.user.lastName} | {date}, {time}</p>
                         </div>
                         <div className="flex gap-2">
                             <button onClick={()=> setIsUpdating(true)} title="Download invoice" className="flex items-center gap-1 border p-1 rounded-md cursor-pointer border-gray-primary shadow- hover:shadow-2xl">

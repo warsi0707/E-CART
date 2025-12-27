@@ -1,8 +1,8 @@
-import { lazy, memo, useState } from "react"
+import { memo, useState } from "react"
 import {Link} from "react-router"
 import { BackendUrl } from "../../utils/Backendurl"
-const UpdateStatus = lazy(()=> import("../../pages/UpdateStatus"))
-const StatusCard = lazy(()=> import("./StatusCard"))
+import StatusCard from "./StatusCard"
+import UpdateStatus from "../../pages/UpdateStatus"
 
 function SellerProcutCard({product, onDelete}){
     const [isUpdating, setIsUpdating] = useState(false)

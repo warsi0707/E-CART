@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit"
-import { cancelOrderThunk, deleteAddressThunk, getAddressThunk, getOrdersThunk, orderThunk, postAddressThunk, updatePasswordThunk, userSigninThunk, userSignUpThunk } from "../thunks/userSignThunk"
+import { cancelOrderThunk, deleteAddressThunk, getAddressThunk, getOrdersThunk, orderThunk, postAddressThunk, updateEmailThunk, updateMobileThunk, updatePasswordThunk, updateUsernameThunk, userSigninThunk, userSignUpThunk } from "../thunks/userSignThunk"
 import toast from "react-hot-toast"
 
 
@@ -161,12 +161,13 @@ const userSlice = createSlice({
             state.address.addressLoading = false
             state.address.items = [...state.address.items, action.payload.address]
         })
-        .addCase(orderThunk.rejected, (action)=>{
+        .addCase(orderThunk.rejected, ()=>{
+            state.orders.loading = false
         })
         .addCase(orderThunk.pending, (state)=>{
             state.orders.loading = true
         })
-        .addCase(orderThunk.fulfilled, (state ,action)=>{
+        .addCase(orderThunk.fulfilled, (state)=>{
             state.orders.loading = false
             state.carts = []
             state.finalCart= []
@@ -185,9 +186,11 @@ const userSlice = createSlice({
             state.orders.loading = false
             state.orders.items = action.payload.orders
         })
-        .addCase(cancelOrderThunk.rejected, (state, action)=>{
+        .addCase(cancelOrderThunk.rejected, (state)=>{
+            state.orders.loading = false
         })
         .addCase(cancelOrderThunk.fulfilled, (state, action)=>{
+            state.orders.loading = false
             toast.success(action.payload.message)
             state.orders.items = state.orders.items.filter((item)=> item._id !== action.payload.order._id)
         })
@@ -200,6 +203,49 @@ const userSlice = createSlice({
         })
         .addCase(updatePasswordThunk.fulfilled, (state, action)=> {
             state.user.loading = false
+            toast.success(action.payload.message)
+        })
+        .addCase(updateUsernameThunk.pending, (state)=> {
+            state.user.loading = true
+        })
+        .addCase(updateUsernameThunk.rejected, (state)=> {
+            state.user.loading = false
+        })
+        .addCase(updateUsernameThunk.fulfilled, (state,action)=> {
+            state.user.loading = false
+            const user = JSON.parse(localStorage.getItem('user'))
+            state.user.items.firstName = action.payload.user.firstName
+            state.user.items.lastName = action.payload.user.lastName
+            user.firstName = action.payload.user.firstName
+            user.lastName = action.payload.user.lastName
+            localStorage.setItem('user',JSON.stringify(user))
+        })
+        .addCase(updateEmailThunk.pending, (state)=>{
+            state.user.loading = true
+        })
+        .addCase(updateEmailThunk.rejected, (state)=>{
+            state.user.loading = false
+        })
+        .addCase(updateEmailThunk.fulfilled, (state, action)=>{
+            state.user.loading = false
+            const user = JSON.parse(localStorage.getItem('user'))
+            user.email = action.payload.email
+            state.user.items.email = action.payload.email
+            localStorage.setItem('user',JSON.stringify(user))
+             toast.success(action.payload.message)
+        })
+        .addCase(updateMobileThunk.pending, (state)=>{
+            state.user.loading = true
+        })
+        .addCase(updateMobileThunk.rejected, (state)=>{
+            state.user.loading = false
+        })
+        .addCase(updateMobileThunk.fulfilled, (state, action)=>{
+            state.user.loading = false
+            const user = JSON.parse(localStorage.getItem('user'))
+            user.contact = action.payload.mobile
+            state.user.items.contact = action.payload.mobile
+            localStorage.setItem('user',JSON.stringify(user))
             toast.success(action.payload.message)
         })
     }

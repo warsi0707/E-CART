@@ -191,3 +191,22 @@ export const sellerCancelOrder = async(req, res)=>{
     })
   }
 }
+export const getOrderById = async(req, res)=>{
+  const {orderId} = req.params;
+  try{
+    const order = await Order.findById(orderId)
+    .populate('user', 'firstName lastName')
+    .populate('address', 'city locality pin')
+    .populate('items.product', 'price title images quantity')
+    if(!order){
+      return res.json({
+        order : {}
+      })
+    }
+    return res.json({order:order})
+  }catch(error){
+    return res.status(404).json({
+      error: error
+    })
+  }
+}

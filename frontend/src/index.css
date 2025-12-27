@@ -21,7 +21,9 @@
     --color-red-secondry:#fee3e3;
 
     --color-purple-primary:#6163ff;
-    --color-purple-secondry:#e0e7ff
+    --color-purple-secondry:#e0e7ff;
+
+    --color-skyblue-primary: #1e79ff;
 }
 
 :root {

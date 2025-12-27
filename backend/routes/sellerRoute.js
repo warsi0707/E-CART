@@ -3,6 +3,7 @@ import {
   deleteProduct,
   editProduct,
   filterProduct,
+  getOrderById,
   getProductById,
   getProducts,
   getSellerOrders,
@@ -25,6 +26,7 @@ sellerRouter
   .delete("/product/:id", AuthChecker, deleteProduct)
   .patch("/product/status/:id", AuthChecker, updateStatus)
   .patch("/order/status/:id", AuthChecker, updateOrderStatus)
-  .delete("/order/:id", AuthChecker, sellerCancelOrder);
+  .delete("/order/:id", AuthChecker, sellerCancelOrder)
+  .get("/order/:orderId", AuthChecker, getOrderById)
 
 export default sellerRouter;
