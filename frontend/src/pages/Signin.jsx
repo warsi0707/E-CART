@@ -7,6 +7,7 @@ import {useDispatch, useSelector} from "react-redux"
 import { userSigninThunk } from "../redux/thunks/userSignThunk";
 import { signinSchema } from "../utils/Schema";
 import {z} from "zod"
+import GoogleLoginButton from "../components/google/GoogleLoginButton";
 
 
 export default function Signin(){
@@ -53,6 +54,7 @@ export default function Signin(){
                     <Link to={"/signup"} className="underline text-purple-primary">Register</Link>
                     <Link to={"/forget-password"} className="underline text-purple-primary">Forgot password</Link>
                 </div>
+                <GoogleLoginButton/>
                 <SignButton handleClick={()=>handleSignin(loginData)} title={loading? "Loading...": "Signin"}/>
             </div>
         </div>
